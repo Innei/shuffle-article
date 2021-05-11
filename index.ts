@@ -1,4 +1,4 @@
-import { process } from './src/index'
+import { process } from './src'
 const raf = requestAnimationFrame
 
 const $raw = document.querySelector('article.raw')!

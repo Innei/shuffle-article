@@ -39,6 +39,25 @@ array-uniq@^1.0.1:
   resolved "https://registry.yarnpkg.com/array-uniq/-/array-uniq-1.0.3.tgz#af6ac877a25cc7f74e058894753858dfdb24fdb6"
   integrity sha1-r2rId6Jcx/dOBYiUdThY39sk/bY=
 
+article-shuffle@1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/article-shuffle/-/article-shuffle-1.0.0.tgz#07c7ad6226723b5b392f224789ef350c7d80c32d"
+  integrity sha512-FFhrx3zKfArOXyv+ZFLNz/oBF7eZ8yN3hgY+KdB+IA7wvsAK7h70L/RBSez5ifsxxjzsKwva/eS97XI2f7rbNA==
+
+article-shuffle@1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/article-shuffle/-/article-shuffle-1.1.1.tgz#d8b671b7e419167a215ad6335b8703ea2b2f3afa"
+  integrity sha512-Gzs4uIFoBk2KaKuB86pCeRchj+bsuDZxqp7SxcjviUPSnLhRiifPSUucgN4Wwz4emxVDj5hdnVufqFMkhJxiVA==
+  dependencies:
+    article-shuffle "1.0.0"
+
+article-shuffle@1.1.2:
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/article-shuffle/-/article-shuffle-1.1.2.tgz#e73d6dcf11afe5e7d76bb4afa8778aa379c50240"
+  integrity sha512-I52AcOKcPVA3o7zhmAEgGFphn9HsLTZDI1PVw09GyG6k4/Cx0V5ZfoulBWeGbwvXDzUvzUIZdEnVMzps7leS8A==
+  dependencies:
+    article-shuffle "1.1.1"
+
 async@^2.6.1:
   version "2.6.3"
   resolved "https://registry.yarnpkg.com/async/-/async-2.6.3.tgz#d72625e2344a3656e3a3ad4fa749fa83299d82ff"
@@ -271,11 +290,6 @@ jsonfile@^4.0.0:
   integrity sha1-h3Gq4HmbZAdrdmQPygWPnBDjPss=
   optionalDependencies:
     graceful-fs "^4.1.6"
-
-"link::article-shuffle@":
-  name ":article-shuffle@"
-  version "0.0.0"
-  uid ""
 
 locate-path@^5.0.0:
   version "5.0.0"

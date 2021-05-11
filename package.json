@@ -10,9 +10,7 @@
   "files": [
     "publish"
   ],
-  "dependencies": {
-    "article-shuffle": "1.1.1"
-  },
+  "dependencies": {},
   "devDependencies": {
     "@types/node": "15.0.2",
     "gh-pages": "3.1.0",
