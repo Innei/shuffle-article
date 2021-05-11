@@ -81,11 +81,11 @@ function wrapTextNode(
   if (el.nodeType != Node.TEXT_NODE) {
     return
   }
-  if (el.textContent.trim().length == 0) {
+  if (el.textContent!.trim().length == 0) {
     return
   }
   let html = ''
-  for (const char of el.textContent) {
+  for (const char of el.textContent!) {
     if (char == '') {
       continue
     }

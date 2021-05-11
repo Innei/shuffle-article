@@ -2,21 +2,29 @@
   "name": "article-shuffle",
   "version": "1.0.0",
   "description": "",
+  "browser": "dist/index.ts",
   "main": "index.js",
   "files": [
-    "dist"
+    "publish"
   ],
   "dependencies": {},
   "devDependencies": {
     "@types/node": "15.0.2",
+    "gh-pages": "3.1.0",
+    "link::article-shuffle": "",
     "rollup": "2.47.0",
+    "rollup-plugin-commonjs": "10.1.0",
+    "rollup-plugin-node-resolve": "5.2.0",
+    "rollup-plugin-typescript2": "0.30.0",
+    "tslib": "2.2.0",
     "typescript": "4.2.4",
     "vite": "2.2.4"
   },
   "scripts": {
     "predeploy": "rm -rf dist",
-    "package": "tsc && rollup -c",
-    "dev": "vite"
+    "package": "rollup -c",
+    "dev": "vite",
+    "deploy": "vite build && gh-pages -d dist"
   },
   "keywords": [
     "shuffle"

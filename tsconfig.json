@@ -7,6 +7,12 @@
       "DOM.Iterable"
     ],
     "module": "ESNext",
+    "moduleResolution": "node",
+    "strict": true,
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
     "sourceMap": false,
     "declaration": true,
     "outDir": "./dist",
