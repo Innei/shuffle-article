@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Playground</title>
+    <style>
+      .g {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-gap: 1em;
+      }
+
+      @media (max-width: 800px) {
+        .g {
+          grid-template-columns: auto;
+          grid-template-rows: 1fr 1fr;
+        }
+      }
+
+      #editor {
+        height: 300px;
+        width: 100%;
+        position: relative;
+        word-break: break-all;
+        overflow: auto;
+      }
+      #raw span {
+        margin-top: 20px;
+        position: static !important;
+        min-height: 300px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="g">
+      <div class="">
+        <p>在此输入文字或是富文本</p>
+        <article contenteditable="" id="editor"></article>
+        <p>实际上:</p>
+        <div class="" id="raw"></div>
+      </div>
+
+      <div class="preview">
+        <p>视觉上:</p>
+        <div class="" id="wp"></div>
+      </div>
+    </div>
+  </body>
+
+  <script type="module" src="./playground.ts"></script>
+</html>

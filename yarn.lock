@@ -15,6 +15,18 @@
   resolved "https://registry.yarnpkg.com/@types/estree/-/estree-0.0.47.tgz#d7a51db20f0650efec24cd04994f523d93172ed4"
   integrity sha512-c5ciR06jK8u9BstrmJyO97m+klJrrhCf9u3rLu3DEAJBirxRqSCvDQoYKmxuYwQI5SZChAWu+tq9oVlGRuzPAg==
 
+"@types/lodash-es@4.17.4":
+  version "4.17.4"
+  resolved "https://registry.yarnpkg.com/@types/lodash-es/-/lodash-es-4.17.4.tgz#b2e440d2bf8a93584a9fd798452ec497986c9b97"
+  integrity sha512-BBz79DCJbD2CVYZH67MBeHZRX++HF+5p8Mo5MzjZi64Wac39S3diedJYHZtScbRVf4DjZyN6LzA0SB0zy+HSSQ==
+  dependencies:
+    "@types/lodash" "*"
+
+"@types/lodash@*":
+  version "4.14.168"
+  resolved "https://registry.yarnpkg.com/@types/lodash/-/lodash-4.14.168.tgz#fe24632e79b7ade3f132891afff86caa5e5ce008"
+  integrity sha512-oVfRvqHV/V6D1yifJbVRU3TMp8OT6o6BG+U9MkwuJ3U8/CsDHvalRpsxBqivn71ztOFZBTfJMvETbqHiaNSj7Q==
+
 "@types/node@*", "@types/node@15.0.2":
   version "15.0.2"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-15.0.2.tgz#51e9c0920d1b45936ea04341aa3e2e58d339fb67"
@@ -38,25 +50,6 @@ array-uniq@^1.0.1:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/array-uniq/-/array-uniq-1.0.3.tgz#af6ac877a25cc7f74e058894753858dfdb24fdb6"
   integrity sha1-r2rId6Jcx/dOBYiUdThY39sk/bY=
-
-article-shuffle@1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/article-shuffle/-/article-shuffle-1.0.0.tgz#07c7ad6226723b5b392f224789ef350c7d80c32d"
-  integrity sha512-FFhrx3zKfArOXyv+ZFLNz/oBF7eZ8yN3hgY+KdB+IA7wvsAK7h70L/RBSez5ifsxxjzsKwva/eS97XI2f7rbNA==
-
-article-shuffle@1.1.1:
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/article-shuffle/-/article-shuffle-1.1.1.tgz#d8b671b7e419167a215ad6335b8703ea2b2f3afa"
-  integrity sha512-Gzs4uIFoBk2KaKuB86pCeRchj+bsuDZxqp7SxcjviUPSnLhRiifPSUucgN4Wwz4emxVDj5hdnVufqFMkhJxiVA==
-  dependencies:
-    article-shuffle "1.0.0"
-
-article-shuffle@1.1.2:
-  version "1.1.2"
-  resolved "https://registry.yarnpkg.com/article-shuffle/-/article-shuffle-1.1.2.tgz#e73d6dcf11afe5e7d76bb4afa8778aa379c50240"
-  integrity sha512-I52AcOKcPVA3o7zhmAEgGFphn9HsLTZDI1PVw09GyG6k4/Cx0V5ZfoulBWeGbwvXDzUvzUIZdEnVMzps7leS8A==
-  dependencies:
-    article-shuffle "1.1.1"
 
 async@^2.6.1:
   version "2.6.3"
@@ -297,6 +290,11 @@ locate-path@^5.0.0:
   integrity sha512-t7hw9pI+WvuwNJXwk5zVHpyhIqzg2qTlklJOf0mVxGSbe3Fp2VieZcduNYjaLDoy6p9uGpQEGWG87WpMKlNq8g==
   dependencies:
     p-locate "^4.1.0"
+
+lodash-es@4.17.21:
+  version "4.17.21"
+  resolved "https://registry.yarnpkg.com/lodash-es/-/lodash-es-4.17.21.tgz#43e626c46e6591b7750beb2b50117390c609e3ee"
+  integrity sha512-mKnC+QJ9pWVzv+C4/U3rRsHapFfHvQFoFB92e52xeyGMcX6/OlIl78je1u8vePzYZSkkogMPJ2yjxxsb89cxyw==
 
 lodash@^4.17.14:
   version "4.17.21"
