@@ -33,11 +33,20 @@
       #write.first-line-indent li {
         margin-left: 2em;
       }
+
       .g {
         display: grid;
         grid-template-columns: 1fr 1fr;
         grid-gap: 1em;
       }
+
+      @media (max-width: 800px) {
+        .g {
+          grid-template-columns: auto;
+          grid-template-rows: 1fr 1fr;
+        }
+      }
+
       .raw span {
         position: static !important;
       }
@@ -53,8 +62,12 @@
     </div>
 
     <div class="" style="text-align: center">
-      <button id="process">Process Shuffle</button>
-      <button id="restore" style="margin-left: 1em">Restore</button>
+      <button id="process">打乱</button>
+      <button id="restore" style="margin-left: 1em">还原</button>
+
+      <p>
+        <a href="./playground.html">我来试试</a>
+      </p>
     </div>
 
     <div class="g">
