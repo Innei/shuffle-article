@@ -12,7 +12,7 @@
         grid-gap: 1em;
       }
 
-      @media (max-width: 800px) {
+      @media (max-width: 1200px) {
         .g {
           grid-template-columns: auto;
           grid-template-rows: 1fr 1fr;
@@ -30,6 +30,10 @@
         padding: 1em;
         box-sizing: border-box;
       }
+      pre {
+        word-wrap: break-word;
+        word-break: break-all;
+      }
       #editor:focus {
         /* border: 2px solid #bbb; */
         box-shadow: 0 0 3px 1px rgba(28, 107, 255, 0.534);
@@ -40,14 +44,14 @@
         min-height: 300px;
       }
     </style>
-  <script type="module" crossorigin src="assets/playground.8a83b990.js"></script>
+  <script type="module" crossorigin src="assets/playground.a271b02c.js"></script>
   <link rel="modulepreload" href="assets/process.ab0c6675.js">
-  <link rel="modulepreload" href="assets/vendor.56e5b913.js">
+  <link rel="modulepreload" href="assets/vendor.6741d190.js">
 </head>
   <body>
     <div class="g">
       <div class="">
-        <p>在此输入文字或是富文本</p>
+        <p>在此输入文字或是富文本 (富文本只能通过复制粘贴的方式呈现)</p>
         <article contenteditable="" id="editor"></article>
         <p>实际上:</p>
         <div class="" id="raw"></div>
