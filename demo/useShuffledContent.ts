@@ -15,6 +15,7 @@ export interface ShuffledChar {
 export interface ShuffledParagraph {
   chars: ShuffledChar[]
   height: number
+  margin: string
 }
 
 interface StoredParams {
@@ -22,6 +23,7 @@ interface StoredParams {
   font: string
   lineHeight: number
   textIndent: number
+  margins: string[]
 }
 
 let _measureCtx: CanvasRenderingContext2D | null = null
@@ -78,13 +80,15 @@ function computeAll(
   lineHeight: number,
   maxWidth: number,
   textIndent: number,
+  margins: string[],
 ): ShuffledParagraph[] {
-  return texts
-    .filter((t) => t.trim().length > 0)
-    .map((text) => {
-      const { chars, height } = computeCharPositions(text, font, maxWidth, lineHeight, textIndent)
-      return { chars: shuffle([...chars]), height }
-    })
+  const results: ShuffledParagraph[] = []
+  for (let i = 0; i < texts.length; i++) {
+    if (texts[i].trim().length === 0) continue
+    const { chars, height } = computeCharPositions(texts[i], font, maxWidth, lineHeight, textIndent)
+    results.push({ chars: shuffle([...chars]), height, margin: margins[i] || '0' })
+  }
+  return results
 }
 
 export function useShuffledContent() {
@@ -99,15 +103,17 @@ export function useShuffledContent() {
     const targets = pEls.length > 0 ? pEls : [el]
 
     const texts: string[] = []
+    const margins: string[] = []
     let font = ''
     let lineHeight = 0
     let textIndent = 0
 
     targets.forEach((target) => {
       const text = target.textContent || ''
+      const cs = getComputedStyle(target)
       texts.push(text)
+      margins.push(cs.margin)
       if (!font) {
-        const cs = getComputedStyle(target)
         font = cs.font
         lineHeight = parseFloat(cs.lineHeight) || parseFloat(cs.fontSize) * 1.2
         textIndent = parseFloat(cs.textIndent) || 0
@@ -119,14 +125,14 @@ export function useShuffledContent() {
       return parseFloat(cs.paddingLeft) + parseFloat(cs.paddingRight)
     })()
 
-    lastParams.current = { texts, font, lineHeight, textIndent }
-    setShuffledData({ paragraphs: computeAll(texts, font, lineHeight, maxWidth, textIndent) })
+    lastParams.current = { texts, font, lineHeight, textIndent, margins }
+    setShuffledData({ paragraphs: computeAll(texts, font, lineHeight, maxWidth, textIndent, margins) })
   }, [])
 
   const reshuffle = useCallback((maxWidth: number) => {
     const p = lastParams.current
     if (!p) return
-    setShuffledData({ paragraphs: computeAll(p.texts, p.font, p.lineHeight, maxWidth, p.textIndent) })
+    setShuffledData({ paragraphs: computeAll(p.texts, p.font, p.lineHeight, maxWidth, p.textIndent, p.margins) })
   }, [])
 
   return { shuffledData, doShuffle, reshuffle }
