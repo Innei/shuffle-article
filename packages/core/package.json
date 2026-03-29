@@ -1,0 +1,41 @@
+{
+  "name": "article-shuffle",
+  "version": "2.1.0",
+  "description": "Shuffle text in the DOM while preserving visual rendering for lightweight copy protection.",
+  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "repository": "Innei/shuffle-article",
+  "files": [
+    "dist"
+  ],
+  "sideEffects": false,
+  "dependencies": {
+    "@chenglou/pretext": "^0.0.3"
+  },
+  "scripts": {
+    "build": "tsdown",
+    "check": "tsc --noEmit -p tsconfig.json",
+    "test": "vitest run",
+    "prepack": "pnpm run build"
+  },
+  "keywords": [
+    "shuffle",
+    "anti-copy",
+    "copy-protection",
+    "text-scramble",
+    "dom",
+    "content-protection"
+  ],
+  "author": "Innei",
+  "license": "MIT"
+}

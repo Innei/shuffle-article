@@ -1,4 +1,4 @@
-export { createShuffleLayout } from './layout'
+export { createShuffledLayout, createShuffleLayout } from './layout'
 export { shuffleAll, shuffleElement } from './dom'
 export type {
   ShuffleAllOptions,

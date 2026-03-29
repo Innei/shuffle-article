@@ -1,4 +1,4 @@
-import type { ShuffledBlock } from '../src'
+import type { ShuffledBlock } from 'article-shuffle'
 
 interface ShuffledViewProps {
   paragraphs: ShuffledBlock[]

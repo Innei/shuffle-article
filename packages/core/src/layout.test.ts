@@ -1,7 +1,7 @@
 // @vitest-environment jsdom
 
 import { beforeAll, describe, expect, it, vi } from 'vitest'
-import { createShuffleLayout } from './layout'
+import { createShuffledLayout, createShuffleLayout } from './layout'
 
 beforeAll(() => {
   Object.defineProperty(HTMLCanvasElement.prototype, 'getContext', {
@@ -13,11 +13,11 @@ beforeAll(() => {
   })
 })
 
-describe('createShuffleLayout', () => {
+describe('createShuffledLayout', () => {
   it('preserves all characters while shuffling positions', () => {
     const randomSpy = vi.spyOn(Math, 'random').mockReturnValue(0)
 
-    const [block] = createShuffleLayout(
+    const [block] = createShuffledLayout(
       [{ text: 'Hello world', margin: '12px 0' }],
       {
         font: '16px sans-serif',
@@ -37,7 +37,7 @@ describe('createShuffleLayout', () => {
   })
 
   it('skips blank text blocks', () => {
-    const blocks = createShuffleLayout(
+    const blocks = createShuffledLayout(
       [{ text: '   ' }, { text: '\n' }],
       {
         font: '16px sans-serif',
@@ -47,5 +47,9 @@ describe('createShuffleLayout', () => {
     )
 
     expect(blocks).toEqual([])
+  })
+
+  it('keeps the legacy alias intact', () => {
+    expect(createShuffleLayout).toBe(createShuffledLayout)
   })
 })

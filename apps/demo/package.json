@@ -1,0 +1,18 @@
+{
+  "name": "@article-shuffle/demo",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "check": "tsc --noEmit -p tsconfig.json"
+  },
+  "dependencies": {
+    "article-shuffle": "workspace:*",
+    "article-shuffle-react": "workspace:*",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4",
+    "react-router": "^7.13.2"
+  }
+}

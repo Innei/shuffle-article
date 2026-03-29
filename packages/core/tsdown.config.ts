@@ -2,7 +2,7 @@ import { defineConfig } from 'tsdown'
 
 export default defineConfig({
   entry: ['./src/index.ts'],
-  outDir: 'publish',
+  outDir: 'dist',
   format: ['esm'],
   dts: true,
   clean: true,
@@ -11,5 +11,5 @@ export default defineConfig({
   deps: {
     neverBundle: ['@chenglou/pretext'],
   },
-  tsconfig: './tsconfig.lib.json',
+  tsconfig: './tsconfig.json',
 })

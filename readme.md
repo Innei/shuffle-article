@@ -4,6 +4,29 @@ Shuffle text in the DOM while preserving visual rendering for lightweight anti-c
 
 在不改变视觉呈现的前提下，打乱 DOM 中的文本顺序，以降低直接复制文本的可用性。
 
+## Packages
+
+| Package | Name | Responsibility |
+| --- | --- | --- |
+| Core | `article-shuffle` | DOM APIs and pure layout utilities |
+| React | `article-shuffle-react` | React component built on top of the core package |
+| Demo | `@article-shuffle/demo` | Workspace demo app used for verification and screenshots |
+
+## Workspace Layout
+
+```text
+shuffle-article/
+  |
+  +-- packages/core
+  |     publishable core package
+  |
+  +-- packages/react
+  |     publishable React package
+  |
+  +-- apps/demo
+        Vite demo app consuming both packages
+```
+
 ## Demo
 
 | Page | Link | Purpose |
@@ -17,21 +40,14 @@ Shuffle text in the DOM while preserving visual rendering for lightweight anti-c
 | --- | --- |
 | ![Main demo overview](./assets/demo-overview.png) | ![Playground overview](./assets/playground-overview.png) |
 
-## Why
-
-- The page remains visually readable after shuffling.
-- Copying rendered text yields scrambled content.
-- Reading text directly from the DOM yields the same scrambled order.
-
-> This is a deterrence layer rather than DRM. OCR, screenshot-based extraction, or custom reconstruction scripts can still bypass it.
-
 ## Install
 
-```sh
-pnpm add article-shuffle
-```
+| Use case | Command |
+| --- | --- |
+| Core package | `pnpm add article-shuffle` |
+| React package | `pnpm add article-shuffle-react` |
 
-## Usage
+## Core Usage
 
 ```ts
 import { shuffleAll, shuffleElement } from 'article-shuffle'
@@ -47,15 +63,36 @@ if (article) {
 }
 ```
 
+## React Usage
+
+```tsx
+import { ShuffleText } from 'article-shuffle-react'
+
+export function ArticlePreview() {
+  return (
+    <ShuffleText
+      blocks={[
+        'The first paragraph stays visually readable.',
+        'The copied result no longer follows the original reading order.',
+      ]}
+      className="article-preview"
+      blockAs="p"
+    />
+  )
+}
+```
+
 ## API
 
-| API | Description |
-| --- | --- |
-| `shuffleElement(el)` | Shuffle one element in place while preserving its visual layout. |
-| `shuffleAll(root, options?)` | Shuffle all matching descendants inside a container. The default selector is `<p>`. |
-| `createShuffleLayout(inputs, options)` | Produce reusable shuffled layout data for custom renderers such as React views or previews. |
-| `process(el)` | Legacy alias of `shuffleElement`. |
-| `processAll(root, options?)` | Legacy alias of `shuffleAll`. |
+| Package | API | Description |
+| --- | --- | --- |
+| `article-shuffle` | `shuffleElement(el)` | Shuffle one element in place while preserving its visual layout. |
+| `article-shuffle` | `shuffleAll(root, options?)` | Shuffle all matching descendants inside a container. |
+| `article-shuffle` | `createShuffledLayout(inputs, options)` | Produce reusable shuffled layout data for custom renderers. |
+| `article-shuffle` | `createShuffleLayout(inputs, options)` | Legacy-compatible alias of `createShuffledLayout`. |
+| `article-shuffle` | `process(el)` / `processAll(root, options?)` | Legacy aliases kept for compatibility. |
+| `article-shuffle-react` | `ShuffleText` | React component that renders shuffled text blocks. |
+| `article-shuffle-react` | `useShuffleLayout` | React hook for building custom shuffled text renderers. |
 
 ## Development
 
@@ -63,37 +100,37 @@ if (article) {
 | --- | --- |
 | Install dependencies | `pnpm install` |
 | Start demo | `pnpm dev` |
-| Type-check | `pnpm check` |
-| Run tests | `pnpm test` |
-| Build demo | `pnpm build:demo` |
-| Build library | `pnpm build:lib` |
+| Type-check workspace | `pnpm check` |
+| Run workspace tests | `pnpm test` |
+| Build packages only | `pnpm build:packages` |
+| Build demo only | `pnpm build:demo` |
 | Run the full verification build | `pnpm build` |
 
 ## How It Works
 
 ```text
-[Original text block]
-          |
-          v
-[Read text + computed typography]
-          |
-          v
+[Input text blocks]
+        |
+        v
+[Read typography and available width]
+        |
+        v
 [Compute per-character positions]
   using @chenglou/pretext + canvas.measureText
-          |
-          v
-[Wrap each character in an absolutely positioned <span>]
-          |
-          v
-[Shuffle span order in the DOM]
-          |
-          v
+        |
+        v
+[Wrap each character in an absolutely positioned span]
+        |
+        v
+[Shuffle DOM order while keeping absolute positions]
+        |
+        v
 [Visual layout stays stable, copied text becomes scrambled]
 ```
 
-- Character layout is computed without relying on repeated `getBoundingClientRect` measurements.
-- The rendered position of each character is preserved through absolute positioning.
-- Only the DOM order changes, so the copied text no longer follows the original reading order.
+- The core package owns the layout algorithm and DOM helpers.
+- The React package reuses the core package rather than reimplementing the algorithm.
+- The demo app consumes both packages to validate the workspace package boundaries.
 
 ## License
 

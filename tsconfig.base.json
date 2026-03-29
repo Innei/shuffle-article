@@ -7,11 +7,15 @@
     "jsx": "react-jsx",
     "strict": true,
     "isolatedModules": true,
-    "noEmit": true,
     "resolveJsonModule": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true
-  },
-  "include": ["src/**/*.ts", "src/**/*.tsx", "demo/**/*.ts", "demo/**/*.tsx"]
+    "ignoreDeprecations": "6.0",
+    "forceConsistentCasingInFileNames": true,
+    "baseUrl": ".",
+    "paths": {
+      "article-shuffle": ["./packages/core/src/index.ts"],
+      "article-shuffle-react": ["./packages/react/src/index.ts"]
+    }
+  }
 }

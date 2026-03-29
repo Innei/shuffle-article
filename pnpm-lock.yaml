@@ -7,10 +7,6 @@ settings:
 importers:
 
   .:
-    dependencies:
-      '@chenglou/pretext':
-        specifier: ^0.0.3
-        version: 0.0.3
     devDependencies:
       '@types/node':
         specifier: ^22.15.0
@@ -30,15 +26,6 @@ importers:
       jsdom:
         specifier: ^29.0.1
         version: 29.0.1
-      react:
-        specifier: ^19.2.4
-        version: 19.2.4
-      react-dom:
-        specifier: ^19.2.4
-        version: 19.2.4(react@19.2.4)
-      react-router:
-        specifier: ^7.13.2
-        version: 7.13.2(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
       tsdown:
         specifier: ^0.21.7
         version: 0.21.7(@emnapi/core@1.9.1)(@emnapi/runtime@1.9.1)(typescript@6.0.2)
@@ -51,6 +38,43 @@ importers:
       vitest:
         specifier: ^4.1.2
         version: 4.1.2(@types/node@22.19.15)(jsdom@29.0.1)(vite@8.0.3(@emnapi/core@1.9.1)(@emnapi/runtime@1.9.1)(@types/node@22.19.15))
+
+  apps/demo:
+    dependencies:
+      article-shuffle:
+        specifier: workspace:*
+        version: link:../../packages/core
+      article-shuffle-react:
+        specifier: workspace:*
+        version: link:../../packages/react
+      react:
+        specifier: ^19.2.4
+        version: 19.2.4
+      react-dom:
+        specifier: ^19.2.4
+        version: 19.2.4(react@19.2.4)
+      react-router:
+        specifier: ^7.13.2
+        version: 7.13.2(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
+
+  packages/core:
+    dependencies:
+      '@chenglou/pretext':
+        specifier: ^0.0.3
+        version: 0.0.3
+
+  packages/react:
+    dependencies:
+      article-shuffle:
+        specifier: workspace:*
+        version: link:../core
+    devDependencies:
+      react:
+        specifier: ^19.2.4
+        version: 19.2.4
+      react-dom:
+        specifier: ^19.2.4
+        version: 19.2.4(react@19.2.4)
 
 packages:
 

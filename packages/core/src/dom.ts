@@ -1,4 +1,4 @@
-import { createShuffleLayout } from './layout'
+import { createShuffledLayout } from './layout'
 import type { ShuffleAllOptions, ShuffleLayoutOptions, ShuffledBlock } from './types'
 
 function getElementLayoutOptions(el: HTMLElement): ShuffleLayoutOptions {
@@ -47,7 +47,7 @@ function renderBlockIntoElement(el: HTMLElement, block: ShuffledBlock): void {
 }
 
 export function shuffleElement(el: HTMLElement): void {
-  const [block] = createShuffleLayout(
+  const [block] = createShuffledLayout(
     [{ text: el.textContent ?? '' }],
     getElementLayoutOptions(el),
   )

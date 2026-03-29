@@ -1,30 +1,9 @@
 {
-  "name": "article-shuffle",
-  "version": "2.0.0",
-  "description": "Shuffle text in the DOM while preserving visual rendering for lightweight copy protection.",
-  "type": "module",
-  "main": "./publish/index.js",
-  "module": "./publish/index.js",
-  "types": "./publish/index.d.ts",
-  "exports": {
-    ".": {
-      "types": "./publish/index.d.ts",
-      "import": "./publish/index.js",
-      "default": "./publish/index.js"
-    },
-    "./package.json": "./package.json"
-  },
-  "repository": "Innei/shuffle-article",
-  "files": [
-    "publish"
-  ],
-  "sideEffects": false,
+  "name": "shuffle-article-workspace",
+  "private": true,
   "packageManager": "pnpm@10.33.0",
   "engines": {
     "node": ">=20"
-  },
-  "dependencies": {
-    "@chenglou/pretext": "^0.0.3"
   },
   "devDependencies": {
     "@types/node": "^22.15.0",
@@ -33,34 +12,19 @@
     "@vitejs/plugin-react": "^6.0.1",
     "gh-pages": "^6.3.0",
     "jsdom": "^29.0.1",
-    "react": "^19.2.4",
-    "react-dom": "^19.2.4",
-    "react-router": "^7.13.2",
     "tsdown": "^0.21.7",
     "typescript": "^6.0.2",
     "vite": "^8.0.3",
     "vitest": "^4.1.2"
   },
   "scripts": {
-    "dev": "vite",
-    "preview": "vite preview",
-    "check": "tsc --noEmit -p tsconfig.json",
-    "test": "vitest run",
-    "test:watch": "vitest",
-    "build:demo": "vite build",
-    "build:lib": "tsdown",
-    "build": "pnpm run check && pnpm run test && pnpm run build:demo && pnpm run build:lib",
-    "deploy": "pnpm run build:demo && gh-pages -d dist",
-    "prepack": "pnpm run build:lib"
-  },
-  "keywords": [
-    "shuffle",
-    "anti-copy",
-    "copy-protection",
-    "text-scramble",
-    "dom",
-    "content-protection"
-  ],
-  "author": "Innei",
-  "license": "MIT"
+    "dev": "pnpm --filter @article-shuffle/demo dev",
+    "preview": "pnpm --filter @article-shuffle/demo preview",
+    "check": "pnpm -r --if-present check",
+    "test": "pnpm -r --if-present test",
+    "build:packages": "pnpm -r --filter \"./packages/*\" build",
+    "build:demo": "pnpm --filter @article-shuffle/demo build",
+    "build": "pnpm run check && pnpm run test && pnpm run build:packages && pnpm run build:demo",
+    "deploy": "pnpm run build && gh-pages -d apps/demo/dist"
+  }
 }

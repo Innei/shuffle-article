@@ -1,10 +1,10 @@
 import { startTransition, useCallback, useRef, useState } from 'react'
 import {
-  createShuffleLayout,
+  createShuffledLayout,
   type ShuffleLayoutInput,
   type ShuffleLayoutOptions,
   type ShuffledBlock,
-} from '../src'
+} from 'article-shuffle'
 
 interface StoredParams {
   blocks: ShuffleLayoutInput[]
@@ -68,7 +68,7 @@ export function useShuffledContent() {
 
   const commitLayout = useCallback(
     (blocks: ShuffleLayoutInput[], options: ShuffleLayoutOptions) => {
-      const paragraphs = createShuffleLayout(blocks, options)
+      const paragraphs = createShuffledLayout(blocks, options)
       startTransition(() => {
         setShuffledData({ paragraphs })
       })

@@ -62,7 +62,7 @@ function computeCharacters(
   return { characters, height: lineIndex * lineHeight }
 }
 
-export function createShuffleLayout(
+export function createShuffledLayout(
   inputs: readonly ShuffleLayoutInput[],
   options: ShuffleLayoutOptions,
 ): ShuffledBlock[] {
@@ -82,3 +82,5 @@ export function createShuffleLayout(
     ]
   })
 }
+
+export const createShuffleLayout = createShuffledLayout

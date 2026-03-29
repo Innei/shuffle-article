@@ -6,8 +6,9 @@ import {
   useState,
 } from 'react'
 import { Link } from 'react-router'
+import { ShuffleText } from 'article-shuffle-react'
 import { useShuffledContent } from './useShuffledContent'
-import { ShuffledView, RawView } from './ShuffledView'
+import { RawView } from './ShuffledView'
 
 const css = `
   .header { padding: 80px 0 48px; text-align: center; }
@@ -250,8 +251,8 @@ export function App() {
             视觉呈现
           </div>
           <div className="panel-body" ref={panelBodyRef}>
-            {shuffled && shuffledData ? (
-              <ShuffledView paragraphs={shuffledData.paragraphs} />
+            {shuffled ? (
+              <ShuffleText blocks={PARAGRAPHS} />
             ) : (
               <div ref={articleRef}>
                 {PARAGRAPHS.map((text, i) => (
