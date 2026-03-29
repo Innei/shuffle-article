@@ -1,80 +1,54 @@
 # Shuffle Article
 
-[![article-shuffle npm version](https://img.shields.io/npm/v/article-shuffle?label=article-shuffle)](https://www.npmjs.com/package/article-shuffle)
-[![react-article-shuffle npm version](https://img.shields.io/npm/v/react-article-shuffle?label=react-article-shuffle)](https://www.npmjs.com/package/react-article-shuffle)
+[![article-shuffle on npm](https://img.shields.io/npm/v/article-shuffle?label=article-shuffle)](https://www.npmjs.com/package/article-shuffle)
+[![react-article-shuffle on npm](https://img.shields.io/npm/v/react-article-shuffle?label=react-article-shuffle)](https://www.npmjs.com/package/react-article-shuffle)
 [![Live Demo](https://img.shields.io/badge/demo-vercel-black?logo=vercel)](https://shuffle-article.vercel.app)
 
-Shuffle text in the DOM while preserving visual rendering for lightweight anti-copy protection.
+Shuffle text in the DOM while preserving visual rendering — a lightweight anti-copy protection technique.
 
 在不改变视觉呈现的前提下，打乱 DOM 中的文本顺序，以降低直接复制文本的可用性。
 
-## Published Packages
+![Demo overview](./assets/demo-overview.png)
 
-| Package | Install | npm | Package README |
-| --- | --- | --- | --- |
-| `article-shuffle` | `pnpm add article-shuffle` | <https://www.npmjs.com/package/article-shuffle> | [packages/core/README.md](./packages/core/README.md) |
-| `react-article-shuffle` | `pnpm add react-article-shuffle` | <https://www.npmjs.com/package/react-article-shuffle> | [packages/react/README.md](./packages/react/README.md) |
+## How it works
+
+1. Read typography metrics (font, line-height, available width) from the target element
+2. Compute per-character positions using [`@chenglou/pretext`](https://github.com/chenglou/pretext) and `canvas.measureText`
+3. Wrap each character in an absolutely-positioned `<span>`
+4. Randomise the DOM order while keeping absolute positions intact
+
+The result: text **looks** the same but the underlying DOM (and therefore clipboard content) is scrambled.
 
 ## Packages
 
-| Package | Name | Responsibility |
+| Package | Description | README |
 | --- | --- | --- |
-| Core | `article-shuffle` | DOM APIs and pure layout utilities |
-| React | `react-article-shuffle` | React component built on top of the core package |
-| Demo | `@article-shuffle/demo` | Workspace demo app used for verification and screenshots |
+| [`article-shuffle`](https://www.npmjs.com/package/article-shuffle) | Core DOM APIs and layout utilities | [packages/core](./packages/core/README.md) |
+| [`react-article-shuffle`](https://www.npmjs.com/package/react-article-shuffle) | React component and hook | [packages/react](./packages/react/README.md) |
 
-## Workspace Layout
+## Quick start
 
-```text
-shuffle-article/
-  |
-  +-- packages/core
-  |     publishable core package
-  |
-  +-- packages/react
-  |     publishable React package
-  |
-  +-- apps/demo
-        Vite demo app consuming both packages
+### Vanilla
+
+```sh
+pnpm add article-shuffle
 ```
-
-## Demo
-
-| Page | Link | Purpose |
-| --- | --- | --- |
-| Main demo | <https://shuffle-article.vercel.app/> | Current production demo entry on Vercel |
-| Playground | <https://shuffle-article.vercel.app/playground> | Interactive playground for testing arbitrary content |
-
-## Screenshots
-
-| Main demo | Playground |
-| --- | --- |
-| ![Main demo overview](./assets/demo-overview.png) | ![Playground overview](./assets/playground-overview.png) |
-
-## Install
-
-| Use case | `pnpm` | `npm` |
-| --- | --- | --- |
-| Core package | `pnpm add article-shuffle` | `npm install article-shuffle` |
-| React package | `pnpm add react-article-shuffle` | `npm install react-article-shuffle` |
-
-## Core Usage
 
 ```ts
 import { shuffleAll, shuffleElement } from 'article-shuffle'
 
-const paragraph = document.querySelector('p')
-if (paragraph) {
-  shuffleElement(paragraph)
-}
+// Shuffle a single element
+shuffleElement(document.querySelector('p')!)
 
-const article = document.querySelector('article')
-if (article) {
-  shuffleAll(article)
-}
+// Shuffle all matching descendants
+shuffleAll(document.querySelector('article')!)
 ```
 
-## React Usage
+### React
+
+```sh
+pnpm add react-article-shuffle
+```
 
 ```tsx
 import { ShuffleText } from 'react-article-shuffle'
@@ -86,92 +60,41 @@ export function ArticlePreview() {
         'The first paragraph stays visually readable.',
         'The copied result no longer follows the original reading order.',
       ]}
-      className="article-preview"
       blockAs="p"
     />
   )
 }
 ```
 
-## API
+## Demo
 
-| Package | API | Description |
-| --- | --- | --- |
-| `article-shuffle` | `shuffleElement(el)` | Shuffle one element in place while preserving its visual layout. |
-| `article-shuffle` | `shuffleAll(root, options?)` | Shuffle all matching descendants inside a container. |
-| `article-shuffle` | `createShuffledLayout(inputs, options)` | Produce reusable shuffled layout data for custom renderers. |
-| `article-shuffle` | `createShuffleLayout(inputs, options)` | Legacy-compatible alias of `createShuffledLayout`. |
-| `article-shuffle` | `process(el)` / `processAll(root, options?)` | Legacy aliases kept for compatibility. |
-| `react-article-shuffle` | `ShuffleText` | React component that renders shuffled text blocks. |
-| `react-article-shuffle` | `useShuffleLayout` | React hook for building custom shuffled text renderers. |
+| Page | Link |
+| --- | --- |
+| Main demo | <https://shuffle-article.vercel.app> |
+| Playground | <https://shuffle-article.vercel.app/playground> |
+
+| Main demo | Playground |
+| --- | --- |
+| ![Main demo](./assets/demo-overview.png) | ![Playground](./assets/playground-overview.png) |
 
 ## Development
 
-| Task | Command |
-| --- | --- |
-| Install dependencies | `pnpm install` |
-| Start demo | `pnpm dev` |
-| Type-check workspace | `pnpm check` |
-| Run workspace tests | `pnpm test` |
-| Build packages only | `pnpm build:packages` |
-| Build demo only | `pnpm build:demo` |
-| Run the full verification build | `pnpm build` |
+> [!NOTE]
+> Requires **Node.js ≥ 20** and **pnpm 10**.
 
-## Documentation Model
-
-```text
-[Root README]
-     |
-     +--> repository overview
-     +--> live demo links
-     +--> workspace commands
-     |
-     +--> [packages/core/README.md]
-     |        package-specific DOM API details
-     |
-     +--> [packages/react/README.md]
-              package-specific React API details
+```sh
+pnpm install     # install dependencies
+pnpm dev         # start demo dev server
+pnpm check       # type-check the workspace
+pnpm test        # run tests
+pnpm build       # full verification build (check → test → packages → demo)
 ```
 
-- The root README is the repository-level index for the monorepo.
-- Package-level installation and API details are maintained in the corresponding package READMEs so that npm pages remain focused and accurate.
+### Workspace layout
 
-## Vercel
-
-| Deployment Mode | Config File | Build Command | Output Directory |
-| --- | --- | --- | --- |
-| Repository root as project root | `./vercel.json` | `pnpm vercel-build` | `apps/demo/dist` |
-| `apps/demo` as project root | `./apps/demo/vercel.json` | `pnpm build` | `dist` |
-
-- Current production domain: <https://shuffle-article.vercel.app>
-- Both configurations include a rewrite to `index.html` so `BrowserRouter` routes such as `/playground` continue to work on direct refresh.
-
-## How It Works
-
-```text
-[Input text blocks]
-        |
-        v
-[Read typography and available width]
-        |
-        v
-[Compute per-character positions]
-  using @chenglou/pretext + canvas.measureText
-        |
-        v
-[Wrap each character in an absolutely positioned span]
-        |
-        v
-[Shuffle DOM order while keeping absolute positions]
-        |
-        v
-[Visual layout stays stable, copied text becomes scrambled]
 ```
-
-- The core package owns the layout algorithm and DOM helpers.
-- The React package reuses the core package rather than reimplementing the algorithm.
-- The demo app consumes both packages to validate the workspace package boundaries.
-
-## License
-
-MIT © [Innei](https://github.com/Innei)
+shuffle-article/
+├── packages/core       # publishable core library
+├── packages/react      # publishable React wrapper
+└── apps/demo           # Vite demo app
+```
