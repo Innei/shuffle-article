@@ -64,6 +64,7 @@ export function useShuffleLayout({
 }: UseShuffleLayoutOptions): UseShuffleLayoutResult {
   const rootRef = useRef<HTMLElement | null>(null)
   const blockRefs = useRef<(HTMLElement | null)[]>([])
+  const storedTextIndent = useRef<number | null>(null)
   const [layout, setLayout] = useState<ShuffledBlock[] | null>(null)
   const [blockPadding, setBlockPadding] = useState({ left: 0, top: 0 })
 
@@ -77,6 +78,7 @@ export function useShuffleLayout({
   const recalculate = useCallback(() => {
     if (!enabled || blocks.length === 0) {
       setLayout(null)
+      storedTextIndent.current = null
       return
     }
 
@@ -101,13 +103,20 @@ export function useShuffleLayout({
       0,
     )
 
+    const textIndent = storedTextIndent.current
+      ?? (parseFloat(firstStyles.textIndent) || 0)
+
+    if (storedTextIndent.current === null) {
+      storedTextIndent.current = textIndent
+    }
+
     const options: ShuffleLayoutOptions = {
       font: getFontValue(firstStyles),
       lineHeight:
         parseFloat(firstStyles.lineHeight) ||
         parseFloat(firstStyles.fontSize) * 1.2,
       maxWidth: width ?? blockContentWidth,
-      textIndent: parseFloat(firstStyles.textIndent) || 0,
+      textIndent,
     }
 
     setBlockPadding({ left: paddingLeft, top: paddingTop })
