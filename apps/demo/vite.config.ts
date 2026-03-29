@@ -8,7 +8,7 @@ export default defineConfig({
   resolve: {
     alias: {
       'article-shuffle': resolve(__dirname, '../../packages/core/src/index.ts'),
-      'article-shuffle-react': resolve(__dirname, '../../packages/react/src/index.ts'),
+      'react-article-shuffle': resolve(__dirname, '../../packages/react/src/index.ts'),
     },
   },
 })

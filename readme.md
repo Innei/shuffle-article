@@ -9,7 +9,7 @@ Shuffle text in the DOM while preserving visual rendering for lightweight anti-c
 | Package | Name | Responsibility |
 | --- | --- | --- |
 | Core | `article-shuffle` | DOM APIs and pure layout utilities |
-| React | `article-shuffle-react` | React component built on top of the core package |
+| React | `react-article-shuffle` | React component built on top of the core package |
 | Demo | `@article-shuffle/demo` | Workspace demo app used for verification and screenshots |
 
 ## Workspace Layout
@@ -45,7 +45,7 @@ shuffle-article/
 | Use case | Command |
 | --- | --- |
 | Core package | `pnpm add article-shuffle` |
-| React package | `pnpm add article-shuffle-react` |
+| React package | `pnpm add react-article-shuffle` |
 
 ## Core Usage
 
@@ -66,7 +66,7 @@ if (article) {
 ## React Usage
 
 ```tsx
-import { ShuffleText } from 'article-shuffle-react'
+import { ShuffleText } from 'react-article-shuffle'
 
 export function ArticlePreview() {
   return (
@@ -91,8 +91,8 @@ export function ArticlePreview() {
 | `article-shuffle` | `createShuffledLayout(inputs, options)` | Produce reusable shuffled layout data for custom renderers. |
 | `article-shuffle` | `createShuffleLayout(inputs, options)` | Legacy-compatible alias of `createShuffledLayout`. |
 | `article-shuffle` | `process(el)` / `processAll(root, options?)` | Legacy aliases kept for compatibility. |
-| `article-shuffle-react` | `ShuffleText` | React component that renders shuffled text blocks. |
-| `article-shuffle-react` | `useShuffleLayout` | React hook for building custom shuffled text renderers. |
+| `react-article-shuffle` | `ShuffleText` | React component that renders shuffled text blocks. |
+| `react-article-shuffle` | `useShuffleLayout` | React hook for building custom shuffled text renderers. |
 
 ## Development
 

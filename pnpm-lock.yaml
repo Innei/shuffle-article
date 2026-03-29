@@ -44,12 +44,12 @@ importers:
       article-shuffle:
         specifier: workspace:*
         version: link:../../packages/core
-      article-shuffle-react:
-        specifier: workspace:*
-        version: link:../../packages/react
       react:
         specifier: ^19.2.4
         version: 19.2.4
+      react-article-shuffle:
+        specifier: workspace:*
+        version: link:../../packages/react
       react-dom:
         specifier: ^19.2.4
         version: 19.2.4(react@19.2.4)

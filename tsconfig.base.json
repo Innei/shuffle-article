@@ -15,7 +15,7 @@
     "baseUrl": ".",
     "paths": {
       "article-shuffle": ["./packages/core/src/index.ts"],
-      "article-shuffle-react": ["./packages/react/src/index.ts"]
+      "react-article-shuffle": ["./packages/react/src/index.ts"]
     }
   }
 }

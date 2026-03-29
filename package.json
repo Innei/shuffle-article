@@ -24,6 +24,7 @@
     "test": "pnpm -r --if-present test",
     "build:packages": "pnpm -r --filter \"./packages/*\" build",
     "build:demo": "pnpm --filter @article-shuffle/demo build",
+    "vercel-build": "pnpm build:demo",
     "build": "pnpm run check && pnpm run test && pnpm run build:packages && pnpm run build:demo",
     "deploy": "pnpm run build && gh-pages -d apps/demo/dist"
   }

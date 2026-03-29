@@ -6,7 +6,7 @@ import {
   useState,
 } from 'react'
 import { Link } from 'react-router'
-import { ShuffleText } from 'article-shuffle-react'
+import { ShuffleText } from 'react-article-shuffle'
 import { useShuffledContent } from './useShuffledContent'
 import { RawView } from './ShuffledView'
 

@@ -1,5 +1,5 @@
 {
-  "name": "article-shuffle-react",
+  "name": "react-article-shuffle",
   "version": "0.1.0",
   "description": "React components for article-shuffle.",
   "type": "module",
