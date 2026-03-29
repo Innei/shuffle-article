@@ -14,10 +14,22 @@
     },
     "./package.json": "./package.json"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Innei/shuffle-article.git",
+    "directory": "packages/react"
+  },
+  "homepage": "https://github.com/Innei/shuffle-article/tree/master/packages/react#readme",
+  "bugs": {
+    "url": "https://github.com/Innei/shuffle-article/issues"
+  },
   "files": [
     "dist"
   ],
   "sideEffects": false,
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
   "dependencies": {
     "article-shuffle": "workspace:*"
   },
@@ -35,6 +47,15 @@
     "test": "vitest run",
     "prepack": "pnpm run build"
   },
+  "keywords": [
+    "react",
+    "react-component",
+    "text-scramble",
+    "anti-copy",
+    "copy-protection",
+    "content-protection",
+    "article-shuffle"
+  ],
   "author": "Innei",
   "license": "MIT"
 }

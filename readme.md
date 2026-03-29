@@ -106,6 +106,15 @@ export function ArticlePreview() {
 | Build demo only | `pnpm build:demo` |
 | Run the full verification build | `pnpm build` |
 
+## Vercel
+
+| Deployment Mode | Config File | Build Command | Output Directory |
+| --- | --- | --- | --- |
+| Repository root as project root | `./vercel.json` | `pnpm vercel-build` | `apps/demo/dist` |
+| `apps/demo` as project root | `./apps/demo/vercel.json` | `pnpm build` | `dist` |
+
+- Both configurations include a rewrite to `index.html` so `BrowserRouter` routes such as `/playground` continue to work on direct refresh.
+
 ## How It Works
 
 ```text

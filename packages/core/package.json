@@ -14,11 +14,22 @@
     },
     "./package.json": "./package.json"
   },
-  "repository": "Innei/shuffle-article",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Innei/shuffle-article.git",
+    "directory": "packages/core"
+  },
+  "homepage": "https://github.com/Innei/shuffle-article/tree/master/packages/core#readme",
+  "bugs": {
+    "url": "https://github.com/Innei/shuffle-article/issues"
+  },
   "files": [
     "dist"
   ],
   "sideEffects": false,
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
   "dependencies": {
     "@chenglou/pretext": "^0.0.3"
   },
@@ -31,10 +42,13 @@
   "keywords": [
     "shuffle",
     "anti-copy",
+    "browser",
     "copy-protection",
+    "dom-manipulation",
     "text-scramble",
     "dom",
-    "content-protection"
+    "content-protection",
+    "pretext"
   ],
   "author": "Innei",
   "license": "MIT"
