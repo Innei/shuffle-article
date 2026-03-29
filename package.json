@@ -1,41 +1,57 @@
 {
   "name": "article-shuffle",
   "version": "2.0.0",
-  "description": "Shuffle text in the DOM while preserving visual rendering — anti-copy protection for web content.",
+  "description": "Shuffle text in the DOM while preserving visual rendering for lightweight copy protection.",
   "type": "module",
-  "main": "publish/index.js",
-  "module": "publish/index.js",
-  "types": "publish/index.d.ts",
+  "main": "./publish/index.js",
+  "module": "./publish/index.js",
+  "types": "./publish/index.d.ts",
   "exports": {
     ".": {
+      "types": "./publish/index.d.ts",
       "import": "./publish/index.js",
-      "types": "./publish/index.d.ts"
-    }
+      "default": "./publish/index.js"
+    },
+    "./package.json": "./package.json"
   },
   "repository": "Innei/shuffle-article",
   "files": [
     "publish"
   ],
+  "sideEffects": false,
+  "packageManager": "pnpm@10.33.0",
+  "engines": {
+    "node": ">=20"
+  },
   "dependencies": {
     "@chenglou/pretext": "^0.0.3"
   },
   "devDependencies": {
-    "react-router": "^7.13.2",
     "@types/node": "^22.15.0",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^6.0.1",
+    "gh-pages": "^6.3.0",
+    "jsdom": "^29.0.1",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
+    "react-router": "^7.13.2",
+    "tsdown": "^0.21.7",
     "typescript": "^6.0.2",
     "vite": "^8.0.3",
-    "vite-plugin-dts": "^4.5.4"
+    "vitest": "^4.1.2"
   },
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
-    "build:lib": "vite build --config vite.lib.config.ts",
-    "deploy": "vite build && gh-pages -d dist"
+    "preview": "vite preview",
+    "check": "tsc --noEmit -p tsconfig.json",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "build:demo": "vite build",
+    "build:lib": "tsdown",
+    "build": "pnpm run check && pnpm run test && pnpm run build:demo && pnpm run build:lib",
+    "deploy": "pnpm run build:demo && gh-pages -d dist",
+    "prepack": "pnpm run build:lib"
   },
   "keywords": [
     "shuffle",

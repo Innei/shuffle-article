@@ -1,4 +1,10 @@
-import { useCallback, useEffect, useRef, useState } from 'react'
+import {
+  useCallback,
+  useEffect,
+  useEffectEvent,
+  useRef,
+  useState,
+} from 'react'
 import { Link } from 'react-router'
 import { useShuffledContent } from './useShuffledContent'
 import { ShuffledView, RawView } from './ShuffledView'
@@ -181,12 +187,22 @@ export function App() {
   const handleCopy = useCallback(async () => {
     if (!shuffledData) return
     const rawText = shuffledData.paragraphs
-      .map((p) => p.chars.map((c) => c.char).join(''))
+      .map((p) => p.characters.map((c) => c.char).join(''))
       .join('\n')
     await navigator.clipboard.writeText(rawText)
     setCopied(true)
     setTimeout(() => setCopied(false), 2000)
   }, [shuffledData])
+
+  const handleResize = useEffectEvent(() => {
+    if (!panelBodyRef.current) return
+    const cs = getComputedStyle(panelBodyRef.current)
+    const width =
+      panelBodyRef.current.clientWidth -
+      parseFloat(cs.paddingLeft) -
+      parseFloat(cs.paddingRight)
+    reshuffle(width)
+  })
 
   useEffect(() => {
     if (!shuffled) return
@@ -194,13 +210,7 @@ export function App() {
     const onResize = () => {
       clearTimeout(timer)
       timer = setTimeout(() => {
-        if (!panelBodyRef.current) return
-        const cs = getComputedStyle(panelBodyRef.current)
-        const width =
-          panelBodyRef.current.clientWidth -
-          parseFloat(cs.paddingLeft) -
-          parseFloat(cs.paddingRight)
-        reshuffle(width)
+        handleResize()
       }, 200)
     }
     window.addEventListener('resize', onResize)
@@ -208,7 +218,7 @@ export function App() {
       clearTimeout(timer)
       window.removeEventListener('resize', onResize)
     }
-  }, [shuffled, reshuffle])
+  }, [shuffled])
 
   return (
     <>

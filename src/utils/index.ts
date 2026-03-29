@@ -9,15 +9,3 @@ export function shuffle<T>(arr: T[]): T[] {
   }
   return arr
 }
-
-/**
- * Escape HTML special characters for safe rendering.
- */
-export function escapeHTML(t: string): string {
-  return t
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/'/g, '&#39;')
-    .replace(/"/g, '&#34;')
-}

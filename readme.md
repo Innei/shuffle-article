@@ -28,22 +28,22 @@ Shuffle text in the DOM while preserving visual rendering for lightweight anti-c
 ## Install
 
 ```sh
-npm install article-shuffle
+pnpm add article-shuffle
 ```
 
 ## Usage
 
 ```ts
-import { process, processAll } from 'article-shuffle'
+import { shuffleAll, shuffleElement } from 'article-shuffle'
 
 const paragraph = document.querySelector('p')
 if (paragraph) {
-  process(paragraph)
+  shuffleElement(paragraph)
 }
 
 const article = document.querySelector('article')
 if (article) {
-  processAll(article)
+  shuffleAll(article)
 }
 ```
 
@@ -51,8 +51,23 @@ if (article) {
 
 | API | Description |
 | --- | --- |
-| `process(el)` | Shuffle one text block while preserving its visual layout. |
-| `processAll(el)` | Shuffle all descendant `<p>` elements; if no paragraph exists, process the element itself. |
+| `shuffleElement(el)` | Shuffle one element in place while preserving its visual layout. |
+| `shuffleAll(root, options?)` | Shuffle all matching descendants inside a container. The default selector is `<p>`. |
+| `createShuffleLayout(inputs, options)` | Produce reusable shuffled layout data for custom renderers such as React views or previews. |
+| `process(el)` | Legacy alias of `shuffleElement`. |
+| `processAll(root, options?)` | Legacy alias of `shuffleAll`. |
+
+## Development
+
+| Task | Command |
+| --- | --- |
+| Install dependencies | `pnpm install` |
+| Start demo | `pnpm dev` |
+| Type-check | `pnpm check` |
+| Run tests | `pnpm test` |
+| Build demo | `pnpm build:demo` |
+| Build library | `pnpm build:lib` |
+| Run the full verification build | `pnpm build` |
 
 ## How It Works
 

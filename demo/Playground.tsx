@@ -1,4 +1,10 @@
-import { useCallback, useEffect, useRef, useState } from 'react'
+import {
+  useCallback,
+  useEffect,
+  useEffectEvent,
+  useRef,
+  useState,
+} from 'react'
 import { Link } from 'react-router'
 import { useShuffledContent } from './useShuffledContent'
 import { ShuffledView, RawView } from './ShuffledView'
@@ -135,7 +141,7 @@ export function Playground() {
     }
   }, [])
 
-  const triggerShuffle = useCallback(() => {
+  const triggerShuffle = useEffectEvent(() => {
     if (!hiddenRef.current || !editorRef.current) return
     syncHiddenWidth()
     hiddenRef.current.innerHTML = editorRef.current.innerHTML
@@ -143,7 +149,7 @@ export function Playground() {
       hiddenRef.current.innerHTML = `<p>${hiddenRef.current.innerHTML}</p>`
     }
     doShuffle(hiddenRef.current)
-  }, [doShuffle, syncHiddenWidth])
+  })
 
   useEffect(() => {
     if (!initialized && editorRef.current) {
@@ -153,7 +159,7 @@ export function Playground() {
         setInitialized(true)
       })
     }
-  }, [initialized, triggerShuffle])
+  }, [initialized])
 
   useEffect(() => {
     let timer: ReturnType<typeof setTimeout>
@@ -167,21 +173,25 @@ export function Playground() {
       clearTimeout(timer)
       editor?.removeEventListener('input', onInput)
     }
-  }, [triggerShuffle])
+  }, [])
+
+  const handleResize = useEffectEvent(() => {
+    if (!editorRef.current) return
+    syncHiddenWidth()
+    const cs = getComputedStyle(editorRef.current)
+    const width =
+      editorRef.current.clientWidth -
+      parseFloat(cs.paddingLeft) -
+      parseFloat(cs.paddingRight)
+    reshuffle(width)
+  })
 
   useEffect(() => {
     let timer: ReturnType<typeof setTimeout>
     const onResize = () => {
       clearTimeout(timer)
       timer = setTimeout(() => {
-        if (!editorRef.current) return
-        syncHiddenWidth()
-        const cs = getComputedStyle(editorRef.current)
-        const width =
-          editorRef.current.clientWidth -
-          parseFloat(cs.paddingLeft) -
-          parseFloat(cs.paddingRight)
-        reshuffle(width)
+        handleResize()
       }, 200)
     }
     window.addEventListener('resize', onResize)
@@ -189,7 +199,7 @@ export function Playground() {
       clearTimeout(timer)
       window.removeEventListener('resize', onResize)
     }
-  }, [reshuffle, syncHiddenWidth])
+  }, [syncHiddenWidth])
 
   return (
     <>

@@ -1,7 +1,7 @@
-import type { ShuffledParagraph } from './useShuffledContent'
+import type { ShuffledBlock } from '../src'
 
 interface ShuffledViewProps {
-  paragraphs: ShuffledParagraph[]
+  paragraphs: ShuffledBlock[]
 }
 
 export function ShuffledView({ paragraphs }: ShuffledViewProps) {
@@ -13,7 +13,7 @@ export function ShuffledView({ paragraphs }: ShuffledViewProps) {
           data-shuffle-p=""
           style={{ position: 'relative', height: p.height, margin: p.margin }}
         >
-          {p.chars.map((c, j) => (
+          {p.characters.map((c, j) => (
             <span
               key={j}
               data-shuffle=""
@@ -33,7 +33,7 @@ export function ShuffledView({ paragraphs }: ShuffledViewProps) {
 }
 
 interface RawViewProps {
-  paragraphs: ShuffledParagraph[]
+  paragraphs: ShuffledBlock[]
 }
 
 export function RawView({ paragraphs }: RawViewProps) {
@@ -41,7 +41,7 @@ export function RawView({ paragraphs }: RawViewProps) {
     <div>
       {paragraphs.map((p, i) => (
         <div key={i} data-shuffle-p="">
-          {p.chars.map((c, j) => (
+          {p.characters.map((c, j) => (
             <span key={j} data-shuffle="">
               {c.char}
             </span>
