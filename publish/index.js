@@ -1,51 +1,55 @@
-import { prepareWithSegments as m, layoutWithLines as g } from "@chenglou/pretext";
-function y(t) {
-  let e = t.length;
-  for (; e > 0; ) {
-    const n = Math.random() * e-- >>> 0;
-    [t[e], t[n]] = [t[n], t[e]];
-  }
-  return t;
+import { layoutWithLines as e, prepareWithSegments as t } from "@chenglou/pretext";
+//#region src/utils/index.ts
+function n(e) {
+	let t = e.length;
+	for (; t > 0;) {
+		let n = Math.random() * t-- >>> 0;
+		[e[t], e[n]] = [e[n], e[t]];
+	}
+	return e;
 }
-let d = null;
-function C() {
-  return d || (d = document.createElement("canvas").getContext("2d")), d;
+//#endregion
+//#region src/process.ts
+var r = null;
+function i() {
+	return r ||= document.createElement("canvas").getContext("2d"), r;
 }
-function v(t, e) {
-  const n = C();
-  return n.font = e, n.measureText(t).width;
+function a(e, t) {
+	let n = i();
+	return n.font = t, n.measureText(e).width;
 }
-function S(t, e, n, a) {
-  const u = m(t, e), r = g(u, n, a), l = [], i = [];
-  for (let s = 0; s < r.lines.length; s++) {
-    const p = r.lines[s], f = s * a, c = p.text;
-    let o = 0;
-    for (const h of c)
-      h !== `
-` && (l.push(h), i.push({ x: o, y: f }), o += v(h, e));
-  }
-  return { chars: l, positions: i };
+function o(n, r, i, o) {
+	let s = e(t(n, r), i, o), c = [], l = [];
+	for (let e = 0; e < s.lines.length; e++) {
+		let t = s.lines[e], n = e * o, i = t.text, u = 0;
+		for (let e of i) e !== "\n" && (c.push(e), l.push({
+			x: u,
+			y: n
+		}), u += a(e, r));
+	}
+	return {
+		chars: c,
+		positions: l
+	};
 }
-function x(t) {
-  const e = getComputedStyle(t), n = e.font, a = parseFloat(e.lineHeight) || parseFloat(e.fontSize) * 1.2, u = t.clientWidth - parseFloat(e.paddingLeft) - parseFloat(e.paddingRight), r = t.textContent || "";
-  if (r.trim().length === 0) return;
-  const { chars: l, positions: i } = S(r, n, u, a);
-  if (l.length === 0) return;
-  const s = document.createElement("div");
-  s.setAttribute("data-shuffle-p", ""), s.style.position = "relative", s.style.height = `${i[i.length - 1].y + a}px`;
-  const p = [];
-  for (let c = 0; c < l.length; c++) {
-    const o = document.createElement("span");
-    o.setAttribute("data-shuffle", ""), o.textContent = l[c], o.style.position = "absolute", o.style.left = `${i[c].x}px`, o.style.top = `${i[c].y}px`, p.push(o);
-  }
-  const f = y(p);
-  s.append(...f), t.innerHTML = "", t.appendChild(s);
+function s(e) {
+	let t = getComputedStyle(e), r = t.font, i = parseFloat(t.lineHeight) || parseFloat(t.fontSize) * 1.2, a = e.clientWidth - parseFloat(t.paddingLeft) - parseFloat(t.paddingRight), s = e.textContent || "";
+	if (s.trim().length === 0) return;
+	let { chars: c, positions: l } = o(s, r, a, i);
+	if (c.length === 0) return;
+	let u = document.createElement("div");
+	u.setAttribute("data-shuffle-p", ""), u.style.position = "relative", u.style.height = `${l[l.length - 1].y + i}px`;
+	let d = [];
+	for (let e = 0; e < c.length; e++) {
+		let t = document.createElement("span");
+		t.setAttribute("data-shuffle", ""), t.textContent = c[e], t.style.position = "absolute", t.style.left = `${l[e].x}px`, t.style.top = `${l[e].y}px`, d.push(t);
+	}
+	let f = n(d);
+	u.append(...f), e.innerHTML = "", e.appendChild(u);
 }
-function E(t) {
-  const e = t.querySelectorAll("p");
-  e.length > 0 ? e.forEach((n) => x(n)) : x(t);
+function c(e) {
+	let t = e.querySelectorAll("p");
+	t.length > 0 ? t.forEach((e) => s(e)) : s(e);
 }
-export {
-  x as process,
-  E as processAll
-};
+//#endregion
+export { s as process, c as processAll };
