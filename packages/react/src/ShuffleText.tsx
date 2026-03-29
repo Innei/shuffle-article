@@ -24,6 +24,7 @@ function renderShuffledBlock(
         position: 'relative',
         height: `${block.height}px`,
         margin: block.margin,
+        textIndent: 0,
       },
       'data-shuffle-p': '',
     },

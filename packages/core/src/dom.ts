@@ -55,6 +55,7 @@ function renderBlockIntoElement(el: HTMLElement, block: ShuffledBlock): void {
   el.innerHTML = ''
   el.setAttribute('data-shuffle-p', '')
   el.style.height = `${block.height}px`
+  el.style.textIndent = '0'
 
   if (currentPosition === '' || currentPosition === 'static') {
     el.style.position = 'relative'
