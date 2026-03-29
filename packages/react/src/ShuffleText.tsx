@@ -11,6 +11,7 @@ function renderShuffledBlock(
   className: string | undefined,
   style: CSSProperties | undefined,
   registerBlock: (index: number) => (node: HTMLElement | null) => void,
+  paddingOffset: { left: number; top: number },
 ) {
   return createElement(
     tagName,
@@ -23,6 +24,7 @@ function renderShuffledBlock(
         position: 'relative',
         height: `${block.height}px`,
         margin: block.margin,
+        textIndent: 0,
       },
       'data-shuffle-p': '',
     },
@@ -34,8 +36,8 @@ function renderShuffledBlock(
           'data-shuffle': '',
           style: {
             position: 'absolute',
-            left: `${character.x}px`,
-            top: `${character.y}px`,
+            left: `${paddingOffset.left + character.x}px`,
+            top: `${paddingOffset.top + character.y}px`,
           },
         },
         character.char,
@@ -99,7 +101,7 @@ export function ShuffleText({
     return []
   }, [blocks, text])
 
-  const { blocks: shuffledBlocks, rootRef, registerBlock } = useShuffleLayout({
+  const { blocks: shuffledBlocks, blockPadding, rootRef, registerBlock } = useShuffleLayout({
     blocks: normalizedBlocks,
     enabled,
     width,
@@ -115,6 +117,7 @@ export function ShuffleText({
             blockClassName,
             blockStyle,
             registerBlock,
+            blockPadding,
           ),
         )
       : normalizedBlocks.map((block, index) =>

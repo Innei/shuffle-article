@@ -1,11 +1,29 @@
 import { createShuffledLayout } from './layout'
 import type { ShuffleAllOptions, ShuffleLayoutOptions, ShuffledBlock } from './types'
 
+function getFontValue(styles: CSSStyleDeclaration): string {
+  if (styles.font) {
+    return styles.font
+  }
+
+  const fontStyle = styles.fontStyle || 'normal'
+  const fontVariant = styles.fontVariant || 'normal'
+  const fontWeight = styles.fontWeight || '400'
+  const fontSize = styles.fontSize || '16px'
+  const lineHeight =
+    styles.lineHeight && styles.lineHeight !== 'normal'
+      ? `/${styles.lineHeight}`
+      : ''
+  const fontFamily = styles.fontFamily || 'sans-serif'
+
+  return `${fontStyle} ${fontVariant} ${fontWeight} ${fontSize}${lineHeight} ${fontFamily}`
+}
+
 function getElementLayoutOptions(el: HTMLElement): ShuffleLayoutOptions {
   const styles = getComputedStyle(el)
 
   return {
-    font: styles.font,
+    font: getFontValue(styles),
     lineHeight:
       parseFloat(styles.lineHeight) || parseFloat(styles.fontSize) * 1.2,
     maxWidth: Math.max(
@@ -29,11 +47,15 @@ function createCharacterNode(char: string, x: number, y: number): HTMLSpanElemen
 }
 
 function renderBlockIntoElement(el: HTMLElement, block: ShuffledBlock): void {
-  const currentPosition = getComputedStyle(el).position
+  const styles = getComputedStyle(el)
+  const currentPosition = styles.position
+  const paddingLeft = parseFloat(styles.paddingLeft) || 0
+  const paddingTop = parseFloat(styles.paddingTop) || 0
 
   el.innerHTML = ''
   el.setAttribute('data-shuffle-p', '')
   el.style.height = `${block.height}px`
+  el.style.textIndent = '0'
 
   if (currentPosition === '' || currentPosition === 'static') {
     el.style.position = 'relative'
@@ -41,7 +63,7 @@ function renderBlockIntoElement(el: HTMLElement, block: ShuffledBlock): void {
 
   el.append(
     ...block.characters.map((character) =>
-      createCharacterNode(character.char, character.x, character.y),
+      createCharacterNode(character.char, paddingLeft + character.x, paddingTop + character.y),
     ),
   )
 }
