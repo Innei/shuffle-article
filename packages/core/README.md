@@ -37,3 +37,4 @@ if (article) {
 ## Repository
 
 - GitHub: <https://github.com/Innei/shuffle-article>
+- Live demo: <https://shuffle-article.vercel.app>

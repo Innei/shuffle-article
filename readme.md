@@ -1,15 +1,19 @@
 # Shuffle Article
 
+[![article-shuffle npm version](https://img.shields.io/npm/v/article-shuffle?label=article-shuffle)](https://www.npmjs.com/package/article-shuffle)
+[![react-article-shuffle npm version](https://img.shields.io/npm/v/react-article-shuffle?label=react-article-shuffle)](https://www.npmjs.com/package/react-article-shuffle)
+[![Live Demo](https://img.shields.io/badge/demo-vercel-black?logo=vercel)](https://shuffle-article.vercel.app)
+
 Shuffle text in the DOM while preserving visual rendering for lightweight anti-copy protection.
 
 在不改变视觉呈现的前提下，打乱 DOM 中的文本顺序，以降低直接复制文本的可用性。
 
 ## Published Packages
 
-| Package | Version | npm | Package README |
+| Package | Install | npm | Package README |
 | --- | --- | --- | --- |
-| `article-shuffle` | `2.1.0` | <https://www.npmjs.com/package/article-shuffle> | [packages/core/README.md](./packages/core/README.md) |
-| `react-article-shuffle` | `0.1.0` | <https://www.npmjs.com/package/react-article-shuffle> | [packages/react/README.md](./packages/react/README.md) |
+| `article-shuffle` | `pnpm add article-shuffle` | <https://www.npmjs.com/package/article-shuffle> | [packages/core/README.md](./packages/core/README.md) |
+| `react-article-shuffle` | `pnpm add react-article-shuffle` | <https://www.npmjs.com/package/react-article-shuffle> | [packages/react/README.md](./packages/react/README.md) |
 
 ## Packages
 
@@ -38,8 +42,8 @@ shuffle-article/
 
 | Page | Link | Purpose |
 | --- | --- | --- |
-| Main demo | <https://innei.github.io/shuffle-article/> | Current public demo entry; compare visual rendering with the actual DOM order |
-| Playground | <https://innei.github.io/shuffle-article/playground> | Current public playground for testing arbitrary content |
+| Main demo | <https://shuffle-article.vercel.app/> | Current production demo entry on Vercel |
+| Playground | <https://shuffle-article.vercel.app/playground> | Interactive playground for testing arbitrary content |
 
 ## Screenshots
 
@@ -139,6 +143,7 @@ export function ArticlePreview() {
 | Repository root as project root | `./vercel.json` | `pnpm vercel-build` | `apps/demo/dist` |
 | `apps/demo` as project root | `./apps/demo/vercel.json` | `pnpm build` | `dist` |
 
+- Current production domain: <https://shuffle-article.vercel.app>
 - Both configurations include a rewrite to `index.html` so `BrowserRouter` routes such as `/playground` continue to work on direct refresh.
 
 ## How It Works

@@ -1,6 +1,6 @@
 {
   "name": "react-article-shuffle",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "React components for article-shuffle.",
   "type": "module",
   "main": "./dist/index.js",
@@ -19,7 +19,7 @@
     "url": "git+https://github.com/Innei/shuffle-article.git",
     "directory": "packages/react"
   },
-  "homepage": "https://github.com/Innei/shuffle-article/tree/master/packages/react#readme",
+  "homepage": "https://shuffle-article.vercel.app",
   "bugs": {
     "url": "https://github.com/Innei/shuffle-article/issues"
   },
