@@ -1,13 +1,10 @@
 {
   "compilerOptions": {
-    "target": "ESNext",
-    "lib": [
-      "ESNext",
-      "DOM",
-      "DOM.Iterable"
-    ],
+    "target": "ES2022",
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
     "module": "ESNext",
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
+    "jsx": "react-jsx",
     "strict": true,
     "resolveJsonModule": true,
     "esModuleInterop": true,
@@ -15,7 +12,7 @@
     "forceConsistentCasingInFileNames": true,
     "sourceMap": false,
     "declaration": true,
-    "outDir": "./dist",
-    "baseUrl": ".",
-  }
+    "outDir": "./dist"
+  },
+  "include": ["src/**/*.ts", "src/**/*.tsx", "demo/**/*.ts", "demo/**/*.tsx"]
 }

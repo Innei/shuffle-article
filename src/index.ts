@@ -1,1 +1,1 @@
-export { process } from './process'
+export { process, processAll } from './process'

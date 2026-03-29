@@ -1,22 +1,23 @@
-export function shuffle(arr: any[]) {
-  let n = arr.length,
-    random
-  while (0 != n) {
-    random = (Math.random() * n--) >>> 0
+/**
+ * Fisher-Yates shuffle (in-place).
+ */
+export function shuffle<T>(arr: T[]): T[] {
+  let n = arr.length
+  while (n > 0) {
+    const random = (Math.random() * n--) >>> 0
     ;[arr[n], arr[random]] = [arr[random], arr[n]]
   }
   return arr
 }
 
-export function escapeHTML(t: string) {
-  const lt = /</g,
-    gt = />/g,
-    ap = /'/g,
-    ic = /"/g
+/**
+ * Escape HTML special characters for safe rendering.
+ */
+export function escapeHTML(t: string): string {
   return t
-    .toString()
-    .replace(lt, '&lt;')
-    .replace(gt, '&gt;')
-    .replace(ap, '&#39;')
-    .replace(ic, '&#34;')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/'/g, '&#39;')
+    .replace(/"/g, '&#34;')
 }
