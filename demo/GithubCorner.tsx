@@ -1,18 +1,3 @@
-const cornerStyle = `
-.github-corner:hover .octo-arm {
-  animation: octocat-wave 560ms ease-in-out;
-}
-@keyframes octocat-wave {
-  0%, 100% { transform: rotate(0); }
-  20%, 60% { transform: rotate(-25deg); }
-  40%, 80% { transform: rotate(10deg); }
-}
-@media (max-width: 500px) {
-  .github-corner:hover .octo-arm { animation: none; }
-  .github-corner .octo-arm { animation: octocat-wave 560ms ease-in-out; }
-}
-`
-
 export function GithubCorner() {
   return (
     <>
@@ -22,16 +7,18 @@ export function GithubCorner() {
         aria-label="View source on GitHub"
       >
         <svg
-          width="80"
-          height="80"
+          width="72"
+          height="72"
           viewBox="0 0 250 250"
           style={{
-            fill: '#151513',
-            color: '#fff',
+            fill: 'var(--text)',
+            color: 'var(--bg)',
             position: 'absolute',
             top: 0,
             border: 0,
             right: 0,
+            opacity: 0.7,
+            transition: 'opacity 0.2s',
           }}
           aria-hidden="true"
         >
@@ -49,7 +36,19 @@ export function GithubCorner() {
           />
         </svg>
       </a>
-      <style>{cornerStyle}</style>
+      <style>{`
+        .github-corner:hover svg { opacity: 1 !important; }
+        .github-corner:hover .octo-arm { animation: octocat-wave 560ms ease-in-out; }
+        @keyframes octocat-wave {
+          0%, 100% { transform: rotate(0); }
+          20%, 60% { transform: rotate(-25deg); }
+          40%, 80% { transform: rotate(10deg); }
+        }
+        @media (max-width: 500px) {
+          .github-corner:hover .octo-arm { animation: none; }
+          .github-corner .octo-arm { animation: octocat-wave 560ms ease-in-out; }
+        }
+      `}</style>
     </>
   )
 }

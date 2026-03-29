@@ -3,86 +3,69 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Shuffle Article Demo</title>
+    <title>Shuffle Article - 文字混淆演示</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=LXGW+WenKai:wght@300;400;700&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
     <style>
       :root {
-        --bg-color: #ffffff;
-        --text-color: #333333;
+        --bg: #f8f9fc;
+        --bg-subtle: #eef1f6;
+        --surface: rgba(255, 255, 255, 0.72);
+        --surface-border: rgba(0, 0, 0, 0.06);
+        --text: #1a1a2e;
+        --text-secondary: #6b7280;
+        --accent: #6366f1;
+        --accent-hover: #4f46e5;
+        --accent-gradient: linear-gradient(135deg, #6366f1, #8b5cf6);
+        --green: #10b981;
+        --orange: #f59e0b;
+        --card-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+        --card-radius: 16px;
+        --mono-font: 'JetBrains Mono', 'Fira Code', monospace;
+        --body-font: 'LXGW WenKai', 'Noto Serif SC', 'PingFang SC', serif;
+        --noise: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
       }
 
-      html {
-        font-size: 18px;
-        background-color: var(--bg-color);
-        color: var(--text-color);
-        font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-        -webkit-font-smoothing: antialiased;
-      }
-
-      body {
-        margin: 0;
-        padding: 0;
-      }
-
-      .header {
-        text-align: center;
-        padding-top: 20px;
-      }
-
-      .controls {
-        text-align: center;
-        margin: 1em 0;
-      }
-
-      .controls button {
-        padding: 0.4em 1.2em;
-        font-size: 1rem;
-        cursor: pointer;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-        background: #fafafa;
-        transition: background 0.2s;
-      }
-
-      .controls button:hover {
-        background: #eee;
-      }
-
-      .g {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        grid-gap: 1em;
-        max-width: 1200px;
-        margin: 0 auto;
-        padding: 0 1em;
-      }
-
-      @media (max-width: 800px) {
-        .g {
-          grid-template-columns: auto;
-          grid-template-rows: 1fr 1fr;
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --bg: #0f0f1a;
+          --bg-subtle: #1a1a2e;
+          --surface: rgba(30, 30, 50, 0.72);
+          --surface-border: rgba(255, 255, 255, 0.08);
+          --text: #e4e4ed;
+          --text-secondary: #9ca3af;
+          --card-shadow: 0 4px 24px rgba(0, 0, 0, 0.3);
         }
       }
 
-      .write {
-        font-weight: 300;
-        max-width: 600px;
-        line-height: 1.8;
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
       }
 
-      .write p {
-        text-indent: 2em;
+      html {
+        font-size: 16px;
+        color: var(--text);
+        font-family: var(--body-font);
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
       }
 
-      .raw span {
-        position: static !important;
+      body {
+        background-color: var(--bg);
+        background-image: var(--noise);
+        min-height: 100vh;
       }
 
-      .label {
-        font-weight: bold;
-        color: #666;
-        border-bottom: 1px solid #eee;
-        padding-bottom: 0.3em;
-        margin-bottom: 0.5em;
+      #root {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 0 24px 80px;
       }
     </style>
   </head>
