@@ -1,129 +1,121 @@
-import { escapeHTML, shuffle } from './utils/index'
+import {
+  prepareWithSegments,
+  layoutWithLines,
+  type LayoutLine,
+} from '@chenglou/pretext'
+import { shuffle, escapeHTML } from './utils/index'
 
-export function process(el: HTMLElement) {
-  const $clone = el.cloneNode(true) as HTMLElement
-  const originRect = el.getBoundingClientRect()
-
-  for (const $child of $clone.childNodes) {
-    nodeDFSProcssTextNode($child as HTMLElement)
-    // $child.replaceWith($newEl)
+/**
+ * Shared offscreen canvas context for measuring text.
+ * Avoids creating a new canvas per call.
+ */
+let _measureCtx: CanvasRenderingContext2D | null = null
+function getMeasureCtx(): CanvasRenderingContext2D {
+  if (!_measureCtx) {
+    const canvas = document.createElement('canvas')
+    _measureCtx = canvas.getContext('2d')!
   }
-
-  // $clone.style.overflow = 'hidden'
-  // $clone.style.transform = 'translateZ(0)'
-
-  el.replaceWith($clone)
-
-  const $textEls = ($clone as HTMLElement).querySelectorAll('[data-shuffle]')
-
-  const $pEls = $clone.querySelectorAll('[data-shuffle-p]')
-  const pElsPosRecord = [] as DOMRect[]
-  $pEls // @ts-ignore
-    .forEach(($el: HTMLElement) => {
-      const rect = $el.getBoundingClientRect()
-      pElsPosRecord.push(rect)
-    })
-  const textElPosRecord = [] as DOMRect[]
-  $textEls
-    // @ts-ignore
-    .forEach(($el: HTMLElement) => {
-      const rect = $el.getBoundingClientRect()
-      textElPosRecord.push(rect)
-    })
-
-  $clone.style.display = 'none'
-  // $clone.style.transform = ''
-  $textEls
-    // @ts-ignore
-    .forEach(($el: HTMLElement, i) => {
-      $el.style.position = 'absolute'
-      $el.style.left = textElPosRecord[i].left + 'px'
-      $el.style.top = textElPosRecord[i].top + 'px'
-    })
-
-  $pEls.forEach(($p, i) => {
-    shuffleSpanNodes($p as HTMLElement)
-    ;($p as HTMLElement).style.height = pElsPosRecord[i].height + 'px'
-  })
-  $clone.style.height = originRect.height + 'px'
-  $clone.style.display = ''
-}
-
-function nodeDFSProcssTextNode(el: HTMLElement) {
-  if (!el) {
-    return
-  }
-
-  const node = wrapTextNode(el)
-  // if (node) {
-  //   shuffleSpanNodes(node as HTMLElement)
-  // }
-
-  if (el.childNodes) {
-    const len = el.childNodes.length
-    for (let i = 0; i < len; i++) {
-      const $child = el.childNodes.item(i) as HTMLElement
-      nodeDFSProcssTextNode($child)
-    }
-  }
+  return _measureCtx
 }
 
 /**
- *
- * @param el 处理 Text Node 包裹 span
- * @param options
- * @returns
+ * Measures the width of a string segment using canvas.
  */
-function wrapTextNode(
-  el: HTMLElement,
-  options: { tagName: 'div' | 'p' | 'span' } = { tagName: 'span' },
-) {
-  if (el.nodeType != Node.TEXT_NODE) {
-    return
-  }
-  if (el.textContent!.trim().length == 0) {
-    return
-  }
-  let html = ''
-  for (const char of el.textContent!) {
-    if (char == '') {
-      continue
-    }
-    html += `<span data-shuffle>${escapeHTML(char)}</span>`
-  }
-  const newEl = document.createElement(options.tagName)
-  newEl.innerHTML = html
-  newEl.setAttribute('data-shuffle-p', '')
-  el.replaceWith(newEl)
-
-  return newEl
-  // if (el.parentNode.nodeType == Node.ELEMENT_NODE) {
-  //   // console.log(el.parentNode)
-  //   const parentNode = el.parentNode as HTMLElement
-  //   parentNode.style.overflow = 'hidden'
-  //   parentNode.innerHTML = html
-  //   parentNode.setAttribute('data-shuffle-p', '')
-  //   return parentNode
-  //   // el.replaceWith()
-  // } else {
-  //   const newEl = document.createElement(options.tagName)
-  //   newEl.innerHTML = html
-  //   el.replaceWith(newEl)
-
-  //   return newEl
-  // }
-  // const newEl = document.createElement(options.tagName)
-  // newEl.style.overflow = 'hidden'
-  // newEl.innerHTML = html
-  // el.replaceWith(newEl)
-  // return newEl
+function measureText(text: string, font: string): number {
+  const ctx = getMeasureCtx()
+  ctx.font = font
+  return ctx.measureText(text).width
 }
 
-function shuffleSpanNodes(el: HTMLElement) {
-  if (!el) return
-  const spans = el.querySelectorAll('[data-shuffle]')
-  if (spans.length != el.children.length) return
-  const shuffled = shuffle([...spans])
+/**
+ * Computes (x, y) positions for every character in a text block using
+ * pretext for line-breaking and canvas measureText for character offsets.
+ * No getBoundingClientRect needed.
+ */
+function computeCharPositions(
+  text: string,
+  font: string,
+  maxWidth: number,
+  lineHeight: number,
+): { chars: string[]; positions: { x: number; y: number }[] } {
+  const prepared = prepareWithSegments(text, font)
+  const result = layoutWithLines(prepared, maxWidth, lineHeight)
+
+  const chars: string[] = []
+  const positions: { x: number; y: number }[] = []
+
+  for (let lineIdx = 0; lineIdx < result.lines.length; lineIdx++) {
+    const line: LayoutLine = result.lines[lineIdx]
+    const y = lineIdx * lineHeight
+    const lineText = line.text
+
+    // Measure each character's x offset within the line
+    let xOffset = 0
+    for (const char of lineText) {
+      if (char === '\n') continue
+      chars.push(char)
+      positions.push({ x: xOffset, y })
+      xOffset += measureText(char, font)
+    }
+  }
+
+  return { chars, positions }
+}
+
+/**
+ * Process an element: shuffle its text characters in the DOM
+ * while maintaining their visual positions using absolute positioning.
+ *
+ * Uses @chenglou/pretext for text layout measurement instead of
+ * getBoundingClientRect, avoiding expensive layout reflows.
+ */
+export function process(el: HTMLElement): void {
+  const computedStyle = getComputedStyle(el)
+  const font = computedStyle.font
+  const lineHeight = parseFloat(computedStyle.lineHeight) || parseFloat(computedStyle.fontSize) * 1.2
+  const maxWidth = el.clientWidth - parseFloat(computedStyle.paddingLeft) - parseFloat(computedStyle.paddingRight)
+
+  // Extract all text from this element
+  const text = el.textContent || ''
+  if (text.trim().length === 0) return
+
+  const { chars, positions } = computeCharPositions(text, font, maxWidth, lineHeight)
+  if (chars.length === 0) return
+
+  // Build character spans with absolute positioning
+  const container = document.createElement('div')
+  container.setAttribute('data-shuffle-p', '')
+  container.style.position = 'relative'
+  container.style.height = `${positions[positions.length - 1].y + lineHeight}px`
+
+  const spans: HTMLSpanElement[] = []
+  for (let i = 0; i < chars.length; i++) {
+    const span = document.createElement('span')
+    span.setAttribute('data-shuffle', '')
+    span.textContent = chars[i]
+    span.style.position = 'absolute'
+    span.style.left = `${positions[i].x}px`
+    span.style.top = `${positions[i].y}px`
+    spans.push(span)
+  }
+
+  // Shuffle the order of spans in the DOM (visual positions stay the same)
+  const shuffled = shuffle(spans)
+  container.append(...shuffled)
+
+  // Replace original content
   el.innerHTML = ''
-  el.append(...shuffled)
+  el.appendChild(container)
+}
+
+/**
+ * Process all child paragraphs / text blocks within an element.
+ */
+export function processAll(el: HTMLElement): void {
+  const paragraphs = el.querySelectorAll('p')
+  if (paragraphs.length > 0) {
+    paragraphs.forEach((p) => process(p))
+  } else {
+    process(el)
+  }
 }

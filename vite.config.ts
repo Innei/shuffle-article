@@ -1,5 +1,6 @@
+import { resolve } from 'path'
 import { defineConfig } from 'vite'
-const { resolve } = require('path')
+
 export default defineConfig({
   base: '',
   build: {

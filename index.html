@@ -1,20 +1,15 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width initial-scale=1" />
-
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Shuffle Article Demo</title>
     <style>
       :root {
         --bg-color: #ffffff;
         --text-color: #333333;
       }
-      #write,
-      .write {
-        font-weight: 300;
-        max-width: 600px;
-        margin: auto;
-      }
+
       html {
         font-size: 18px;
         background-color: var(--bg-color);
@@ -23,21 +18,42 @@
         -webkit-font-smoothing: antialiased;
       }
 
-      #write.first-line-indent p {
-        text-indent: 2em;
+      body {
+        margin: 0;
+        padding: 0;
       }
-      #write.first-line-indent li p,
-      #write.first-line-indent p * {
-        text-indent: 0px;
+
+      .header {
+        text-align: center;
+        padding-top: 20px;
       }
-      #write.first-line-indent li {
-        margin-left: 2em;
+
+      .controls {
+        text-align: center;
+        margin: 1em 0;
+      }
+
+      .controls button {
+        padding: 0.4em 1.2em;
+        font-size: 1rem;
+        cursor: pointer;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        background: #fafafa;
+        transition: background 0.2s;
+      }
+
+      .controls button:hover {
+        background: #eee;
       }
 
       .g {
         display: grid;
         grid-template-columns: 1fr 1fr;
         grid-gap: 1em;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 1em;
       }
 
       @media (max-width: 800px) {
@@ -47,63 +63,78 @@
         }
       }
 
+      #write,
+      .write {
+        font-weight: 300;
+        max-width: 600px;
+        line-height: 1.8;
+      }
+
+      #write p,
+      .write p {
+        text-indent: 2em;
+      }
+
       .raw span {
         position: static !important;
       }
+
+      .label {
+        font-weight: bold;
+        color: #666;
+        border-bottom: 1px solid #eee;
+        padding-bottom: 0.3em;
+        margin-bottom: 0.5em;
+      }
     </style>
-    <title></title>
   </head>
-  <body class="typora-export">
-    <div class="" style="text-align: center; padding-top: 20px">
+  <body>
+    <div class="header">
       <h2>匆匆</h2>
       <h1>Shuffle DEMO</h1>
-      <p>打开 Devtool 检查 DOM 树</p>
+      <p>打开 DevTools 检查 DOM 树</p>
     </div>
 
-    <div class="" style="text-align: center">
+    <div class="controls">
       <button id="process">打乱</button>
       <button id="restore" style="margin-left: 1em">还原</button>
-
       <p>
         <a href="./playground.html">我来试试</a>
       </p>
     </div>
 
     <div class="g">
-      <div class="">
-        <p>视觉上的:</p>
+      <div>
+        <p class="label">视觉上的:</p>
         <article id="write" class="">
           <p>
-            　　
             燕子去了，有再来的时候；杨柳枯了，有再青的时候；桃花谢了，有再开的时候。但是，聪明的，你告诉我，我们的日子为什么一去不复返呢？——是有人偷了他们罢：那是谁？又藏在何处呢？是他们自己逃走了罢：现在又到了哪里呢？
           </p>
           <p>
-            　　我不知道他们给了我多少日子；但我的手确乎是渐渐空虚了。在默默里算着，八千多日子已经从我手中溜去；像针尖上一滴水滴在大海里，我的日子滴在时间的流里，没有声音，也没有影子。我不禁头涔涔而泪潸潸了。
+            我不知道他们给了我多少日子；但我的手确乎是渐渐空虚了。在默默里算着，八千多日子已经从我手中溜去；像针尖上一滴水滴在大海里，我的日子滴在时间的流里，没有声音，也没有影子。我不禁头涔涔而泪潸潸了。
           </p>
           <p>
-            　　去的尽管去了，来的尽管来着；去来的中间，又怎样地匆匆呢？早上我起来的时候，小屋里射进两三方斜斜的太阳。太阳他有脚啊，轻轻悄悄地挪移了；我也茫茫然跟着旋转。于是——洗手的时候，日子从水盆里过去；吃饭的时候，日子从饭碗里过去；默默时，便从凝然的双眼前过去。我觉察他去的匆匆了，伸出手遮挽时，他又从遮挽着的手边过去，天黑时，我躺在床上，他便伶伶俐俐地从我身上跨过，从我脚边飞去了。等我睁开眼和太阳再见，这算又溜走了一日。我掩着面叹息。但是新来的日子的影儿又开始在叹息里闪过了。
+            去的尽管去了，来的尽管来着；去来的中间，又怎样地匆匆呢？早上我起来的时候，小屋里射进两三方斜斜的太阳。太阳他有脚啊，轻轻悄悄地挪移了；我也茫茫然跟着旋转。于是——洗手的时候，日子从水盆里过去；吃饭的时候，日子从饭碗里过去；默默时，便从凝然的双眼前过去。我觉察他去的匆匆了，伸出手遮挽时，他又从遮挽着的手边过去，天黑时，我躺在床上，他便伶伶俐俐地从我身上跨过，从我脚边飞去了。等我睁开眼和太阳再见，这算又溜走了一日。我掩着面叹息。但是新来的日子的影儿又开始在叹息里闪过了。
           </p>
           <p>
-            　　在逃去如飞的日子里，在千门万户的世界里的我能做些什么呢？只有徘徊罢了，只有匆匆罢了；在八千多日的匆匆里，除徘徊外，又剩些什么呢？过去的日子如轻烟，被微风吹散了，如薄雾，被初阳蒸融了；我留着些什么痕迹呢？我何曾留着像游丝样的痕迹呢？我赤裸裸来到这世界，转眼间也将赤裸裸的回去罢？但不能平的，为什么偏要白白走这一遭啊？
+            在逃去如飞的日子里，在千门万户的世界里的我能做些什么呢？只有徘徊罢了，只有匆匆罢了；在八千多日的匆匆里，除徘徊外，又剩些什么呢？过去的日子如轻烟，被微风吹散了，如薄雾，被初阳蒸融了；我留着些什么痕迹呢？我何曾留着像游丝样的痕迹呢？我赤裸裸来到这世界，转眼间也将赤裸裸的回去罢？但不能平的，为什么偏要白白走这一遭啊？
           </p>
-          <!-- <p>你聪明的，告诉我，我们的日子为什么一去不复返呢？</p> -->
         </article>
       </div>
-      <div class="">
-        <p>实际上的:</p>
+      <div>
+        <p class="label">实际上的:</p>
         <article class="write raw">
           <p>
-            　　
             燕子去了，有再来的时候；杨柳枯了，有再青的时候；桃花谢了，有再开的时候。但是，聪明的，你告诉我，我们的日子为什么一去不复返呢？——是有人偷了他们罢：那是谁？又藏在何处呢？是他们自己逃走了罢：现在又到了哪里呢？
           </p>
           <p>
-            　　我不知道他们给了我多少日子；但我的手确乎是渐渐空虚了。在默默里算着，八千多日子已经从我手中溜去；像针尖上一滴水滴在大海里，我的日子滴在时间的流里，没有声音，也没有影子。我不禁头涔涔而泪潸潸了。
+            我不知道他们给了我多少日子；但我的手确乎是渐渐空虚了。在默默里算着，八千多日子已经从我手中溜去；像针尖上一滴水滴在大海里，我的日子滴在时间的流里，没有声音，也没有影子。我不禁头涔涔而泪潸潸了。
           </p>
           <p>
-            　　去的尽管去了，来的尽管来着；去来的中间，又怎样地匆匆呢？早上我起来的时候，小屋里射进两三方斜斜的太阳。太阳他有脚啊，轻轻悄悄地挪移了；我也茫茫然跟着旋转。于是——洗手的时候，日子从水盆里过去；吃饭的时候，日子从饭碗里过去；默默时，便从凝然的双眼前过去。我觉察他去的匆匆了，伸出手遮挽时，他又从遮挽着的手边过去，天黑时，我躺在床上，他便伶伶俐俐地从我身上跨过，从我脚边飞去了。等我睁开眼和太阳再见，这算又溜走了一日。我掩着面叹息。但是新来的日子的影儿又开始在叹息里闪过了。
+            去的尽管去了，来的尽管来着；去来的中间，又怎样地匆匆呢？早上我起来的时候，小屋里射进两三方斜斜的太阳。太阳他有脚啊，轻轻悄悄地挪移了；我也茫茫然跟着旋转。于是——洗手的时候，日子从水盆里过去；吃饭的时候，日子从饭碗里过去；默默时，便从凝然的双眼前过去。我觉察他去的匆匆了，伸出手遮挽时，他又从遮挽着的手边过去，天黑时，我躺在床上，他便伶伶俐俐地从我身上跨过，从我脚边飞去了。等我睁开眼和太阳再见，这算又溜走了一日。我掩着面叹息。但是新来的日子的影儿又开始在叹息里闪过了。
           </p>
           <p>
-            　　在逃去如飞的日子里，在千门万户的世界里的我能做些什么呢？只有徘徊罢了，只有匆匆罢了；在八千多日的匆匆里，除徘徊外，又剩些什么呢？过去的日子如轻烟，被微风吹散了，如薄雾，被初阳蒸融了；我留着些什么痕迹呢？我何曾留着像游丝样的痕迹呢？我赤裸裸来到这世界，转眼间也将赤裸裸的回去罢？但不能平的，为什么偏要白白走这一遭啊？
+            在逃去如飞的日子里，在千门万户的世界里的我能做些什么呢？只有徘徊罢了，只有匆匆罢了；在八千多日的匆匆里，除徘徊外，又剩些什么呢？过去的日子如轻烟，被微风吹散了，如薄雾，被初阳蒸融了；我留着些什么痕迹呢？我何曾留着像游丝样的痕迹呢？我赤裸裸来到这世界，转眼间也将赤裸裸的回去罢？但不能平的，为什么偏要白白走这一遭啊？
           </p>
         </article>
       </div>
@@ -113,18 +144,12 @@
       href="https://github.com/Innei/shuffle-article"
       class="github-corner"
       aria-label="View source on GitHub"
-      ><svg
+    >
+      <svg
         width="80"
         height="80"
         viewBox="0 0 250 250"
-        style="
-          fill: #151513;
-          color: #fff;
-          position: absolute;
-          top: 0;
-          border: 0;
-          right: 0;
-        "
+        style="fill: #151513; color: #fff; position: absolute; top: 0; border: 0; right: 0"
         aria-hidden="true"
       >
         <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
@@ -138,34 +163,24 @@
           d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
           fill="currentColor"
           class="octo-body"
-        ></path></svg></a
-    ><style>
+        ></path>
+      </svg>
+    </a>
+    <style>
       .github-corner:hover .octo-arm {
         animation: octocat-wave 560ms ease-in-out;
       }
       @keyframes octocat-wave {
-        0%,
-        100% {
-          transform: rotate(0);
-        }
-        20%,
-        60% {
-          transform: rotate(-25deg);
-        }
-        40%,
-        80% {
-          transform: rotate(10deg);
-        }
+        0%, 100% { transform: rotate(0); }
+        20%, 60% { transform: rotate(-25deg); }
+        40%, 80% { transform: rotate(10deg); }
       }
       @media (max-width: 500px) {
-        .github-corner:hover .octo-arm {
-          animation: none;
-        }
-        .github-corner .octo-arm {
-          animation: octocat-wave 560ms ease-in-out;
-        }
+        .github-corner:hover .octo-arm { animation: none; }
+        .github-corner .octo-arm { animation: octocat-wave 560ms ease-in-out; }
       }
     </style>
+
+    <script src="./index.ts" type="module"></script>
   </body>
-  <script src="./index.ts" type="module"></script>
 </html>

@@ -1,48 +1,40 @@
 import { process } from './src'
-const raf = requestAnimationFrame
 
 const $raw = document.querySelector('article.raw')!
-const $article = document.querySelector('article') as HTMLElement
+const $article = document.querySelector('article#write') as HTMLElement
 const originHTML = $article.innerHTML
-function main() {
+
+let shuffled = false
+
+function doShuffle() {
+  if (shuffled) return
+
   $article.innerHTML = originHTML
-}
-let flag = false
-function shuffleTest() {
-  if (flag) {
-    return
-  }
-  const $article = document.querySelector('article') as HTMLElement
-  $article.innerHTML = originHTML
+  $article.querySelectorAll('p').forEach((p) => process(p))
 
-  $article.querySelectorAll('p').forEach(($p) => {
-    process($p)
-  })
-
-  raf(() => {
-    const $article = document.querySelector('article') as HTMLElement
-
-    // $raw.textContent = $article.textContent
-
+  requestAnimationFrame(() => {
     $raw.innerHTML = $article.innerHTML
-    flag = true
+    shuffled = true
   })
 }
 
-document.getElementById('process')!.onclick = shuffleTest
-
-window.onresize = () => {
-  if (flag) {
-    flag = false
-  }
-  shuffleTest()
-}
-document.getElementById('restore')!.onclick = () => {
-  if (!flag) {
-    return
-  }
+function restore() {
+  if (!shuffled) return
   $article.innerHTML = originHTML
   $raw.innerHTML = originHTML
-  flag = false
+  shuffled = false
 }
-main()
+
+document.getElementById('process')!.onclick = doShuffle
+document.getElementById('restore')!.onclick = restore
+
+let resizeTimer: ReturnType<typeof setTimeout>
+window.addEventListener('resize', () => {
+  clearTimeout(resizeTimer)
+  resizeTimer = setTimeout(() => {
+    if (shuffled) {
+      shuffled = false
+      doShuffle()
+    }
+  }, 200)
+})
