@@ -4,6 +4,13 @@ Shuffle text in the DOM while preserving visual rendering for lightweight anti-c
 
 在不改变视觉呈现的前提下，打乱 DOM 中的文本顺序，以降低直接复制文本的可用性。
 
+## Published Packages
+
+| Package | Version | npm | Package README |
+| --- | --- | --- | --- |
+| `article-shuffle` | `2.1.0` | <https://www.npmjs.com/package/article-shuffle> | [packages/core/README.md](./packages/core/README.md) |
+| `react-article-shuffle` | `0.1.0` | <https://www.npmjs.com/package/react-article-shuffle> | [packages/react/README.md](./packages/react/README.md) |
+
 ## Packages
 
 | Package | Name | Responsibility |
@@ -31,8 +38,8 @@ shuffle-article/
 
 | Page | Link | Purpose |
 | --- | --- | --- |
-| Main demo | <https://innei.github.io/shuffle-article/> | Compare visual rendering with the actual DOM order |
-| Playground | <https://innei.github.io/shuffle-article/playground> | Type or paste content and inspect the shuffled result |
+| Main demo | <https://innei.github.io/shuffle-article/> | Current public demo entry; compare visual rendering with the actual DOM order |
+| Playground | <https://innei.github.io/shuffle-article/playground> | Current public playground for testing arbitrary content |
 
 ## Screenshots
 
@@ -42,10 +49,10 @@ shuffle-article/
 
 ## Install
 
-| Use case | Command |
-| --- | --- |
-| Core package | `pnpm add article-shuffle` |
-| React package | `pnpm add react-article-shuffle` |
+| Use case | `pnpm` | `npm` |
+| --- | --- | --- |
+| Core package | `pnpm add article-shuffle` | `npm install article-shuffle` |
+| React package | `pnpm add react-article-shuffle` | `npm install react-article-shuffle` |
 
 ## Core Usage
 
@@ -105,6 +112,25 @@ export function ArticlePreview() {
 | Build packages only | `pnpm build:packages` |
 | Build demo only | `pnpm build:demo` |
 | Run the full verification build | `pnpm build` |
+
+## Documentation Model
+
+```text
+[Root README]
+     |
+     +--> repository overview
+     +--> live demo links
+     +--> workspace commands
+     |
+     +--> [packages/core/README.md]
+     |        package-specific DOM API details
+     |
+     +--> [packages/react/README.md]
+              package-specific React API details
+```
+
+- The root README is the repository-level index for the monorepo.
+- Package-level installation and API details are maintained in the corresponding package READMEs so that npm pages remain focused and accurate.
 
 ## Vercel
 
