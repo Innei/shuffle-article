@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
+import { Link } from 'react-router'
 import { useShuffledContent } from './useShuffledContent'
 import { ShuffledView, RawView } from './ShuffledView'
 
@@ -269,7 +270,7 @@ export function App() {
       </div>
 
       <div className="nav">
-        <a href="./playground.html">Playground</a>
+        <Link to="/playground">Playground</Link>
         <a href="https://github.com/Innei/shuffle-article" target="_blank" rel="noopener">
           GitHub
         </a>

@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
+import { Link } from 'react-router'
 import { useShuffledContent } from './useShuffledContent'
 import { ShuffledView, RawView } from './ShuffledView'
 
@@ -196,7 +197,7 @@ export function Playground() {
 
       <div className="pg-header">
         <h1>Playground</h1>
-        <a href="./index.html">← Back</a>
+        <Link to="/">← Back</Link>
       </div>
 
       <div className="pg-grid">
