@@ -12,6 +12,17 @@ export interface ShuffledChar {
   y: number
 }
 
+export interface ShuffledParagraph {
+  chars: ShuffledChar[]
+  height: number
+}
+
+interface StoredParams {
+  texts: string[]
+  font: string
+  lineHeight: number
+}
+
 let _measureCtx: CanvasRenderingContext2D | null = null
 function getMeasureCtx(): CanvasRenderingContext2D {
   if (!_measureCtx) {
@@ -31,58 +42,73 @@ function computeCharPositions(
   const result = layoutWithLines(prepared, maxWidth, lineHeight)
 
   const chars: ShuffledChar[] = []
+  const ctx = getMeasureCtx()
+  ctx.font = font
 
   for (let lineIdx = 0; lineIdx < result.lines.length; lineIdx++) {
     const line: LayoutLine = result.lines[lineIdx]
     const y = lineIdx * lineHeight
-    const lineText = line.text
-    const ctx = getMeasureCtx()
-    ctx.font = font
 
     let xOffset = 0
-    for (const char of lineText) {
+    for (const char of line.text) {
       if (char === '\n') continue
       chars.push({ char, x: xOffset, y })
       xOffset += ctx.measureText(char).width
     }
   }
 
-  const height = result.lines.length * lineHeight
-  return { chars, height }
+  return { chars, height: result.lines.length * lineHeight }
+}
+
+function computeAll(texts: string[], font: string, lineHeight: number, maxWidth: number): ShuffledParagraph[] {
+  return texts
+    .filter((t) => t.trim().length > 0)
+    .map((text) => {
+      const { chars, height } = computeCharPositions(text, font, maxWidth, lineHeight)
+      return { chars: shuffle([...chars]), height }
+    })
 }
 
 export function useShuffledContent() {
   const [shuffledData, setShuffledData] = useState<{
-    paragraphs: { chars: ShuffledChar[]; height: number }[]
+    paragraphs: ShuffledParagraph[]
   } | null>(null)
 
-  const containerRef = useRef<HTMLElement>(null)
+  // Store last params so we can recompute on resize with a new width
+  const lastParams = useRef<StoredParams | null>(null)
 
   const doShuffle = useCallback((el: HTMLElement) => {
-    const paragraphs = el.querySelectorAll('p')
-    const targets = paragraphs.length > 0 ? paragraphs : [el]
-    const results: { chars: ShuffledChar[]; height: number }[] = []
+    const pEls = el.querySelectorAll('p')
+    const targets = pEls.length > 0 ? pEls : [el]
+
+    const texts: string[] = []
+    let font = ''
+    let lineHeight = 0
 
     targets.forEach((target) => {
       const text = target.textContent || ''
-      if (text.trim().length === 0) return
-
-      const computedStyle = getComputedStyle(target)
-      const font = computedStyle.font
-      const lineHeight =
-        parseFloat(computedStyle.lineHeight) ||
-        parseFloat(computedStyle.fontSize) * 1.2
-      const maxWidth =
-        target.clientWidth -
-        parseFloat(computedStyle.paddingLeft) -
-        parseFloat(computedStyle.paddingRight)
-
-      const { chars, height } = computeCharPositions(text, font, maxWidth, lineHeight)
-      results.push({ chars: shuffle([...chars]), height })
+      texts.push(text)
+      if (!font) {
+        const cs = getComputedStyle(target)
+        font = cs.font
+        lineHeight = parseFloat(cs.lineHeight) || parseFloat(cs.fontSize) * 1.2
+      }
     })
 
-    setShuffledData({ paragraphs: results })
+    const maxWidth = el.clientWidth - (() => {
+      const cs = getComputedStyle(el)
+      return parseFloat(cs.paddingLeft) + parseFloat(cs.paddingRight)
+    })()
+
+    lastParams.current = { texts, font, lineHeight }
+    setShuffledData({ paragraphs: computeAll(texts, font, lineHeight, maxWidth) })
   }, [])
 
-  return { shuffledData, doShuffle, containerRef }
+  const reshuffle = useCallback((maxWidth: number) => {
+    const p = lastParams.current
+    if (!p) return
+    setShuffledData({ paragraphs: computeAll(p.texts, p.font, p.lineHeight, maxWidth) })
+  }, [])
+
+  return { shuffledData, doShuffle, reshuffle }
 }

@@ -125,17 +125,24 @@ const css = `
 export function Playground() {
   const editorRef = useRef<HTMLDivElement>(null)
   const hiddenRef = useRef<HTMLDivElement>(null)
-  const { shuffledData, doShuffle } = useShuffledContent()
+  const { shuffledData, doShuffle, reshuffle } = useShuffledContent()
   const [initialized, setInitialized] = useState(false)
+
+  const syncHiddenWidth = useCallback(() => {
+    if (hiddenRef.current && editorRef.current) {
+      hiddenRef.current.style.width = `${editorRef.current.clientWidth}px`
+    }
+  }, [])
 
   const triggerShuffle = useCallback(() => {
     if (!hiddenRef.current || !editorRef.current) return
+    syncHiddenWidth()
     hiddenRef.current.innerHTML = editorRef.current.innerHTML
     if (!hiddenRef.current.querySelector('p')) {
       hiddenRef.current.innerHTML = `<p>${hiddenRef.current.innerHTML}</p>`
     }
     doShuffle(hiddenRef.current)
-  }, [doShuffle])
+  }, [doShuffle, syncHiddenWidth])
 
   useEffect(() => {
     if (!initialized && editorRef.current) {
@@ -165,14 +172,23 @@ export function Playground() {
     let timer: ReturnType<typeof setTimeout>
     const onResize = () => {
       clearTimeout(timer)
-      timer = setTimeout(triggerShuffle, 200)
+      timer = setTimeout(() => {
+        if (!editorRef.current) return
+        syncHiddenWidth()
+        const cs = getComputedStyle(editorRef.current)
+        const width =
+          editorRef.current.clientWidth -
+          parseFloat(cs.paddingLeft) -
+          parseFloat(cs.paddingRight)
+        reshuffle(width)
+      }, 200)
     }
     window.addEventListener('resize', onResize)
     return () => {
       clearTimeout(timer)
       window.removeEventListener('resize', onResize)
     }
-  }, [triggerShuffle])
+  }, [reshuffle, syncHiddenWidth])
 
   return (
     <>
@@ -226,7 +242,6 @@ export function Playground() {
           position: 'absolute',
           visibility: 'hidden',
           pointerEvents: 'none',
-          width: editorRef.current?.clientWidth ?? 500,
           lineHeight: '1.85',
           fontSize: '0.9375rem',
           fontFamily:

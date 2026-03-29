@@ -160,7 +160,8 @@ const PARAGRAPHS = [
 
 export function App() {
   const articleRef = useRef<HTMLDivElement>(null)
-  const { shuffledData, doShuffle } = useShuffledContent()
+  const panelBodyRef = useRef<HTMLDivElement>(null)
+  const { shuffledData, doShuffle, reshuffle } = useShuffledContent()
   const [shuffled, setShuffled] = useState(false)
   const [copied, setCopied] = useState(false)
 
@@ -192,7 +193,13 @@ export function App() {
     const onResize = () => {
       clearTimeout(timer)
       timer = setTimeout(() => {
-        if (articleRef.current) doShuffle(articleRef.current)
+        if (!panelBodyRef.current) return
+        const cs = getComputedStyle(panelBodyRef.current)
+        const width =
+          panelBodyRef.current.clientWidth -
+          parseFloat(cs.paddingLeft) -
+          parseFloat(cs.paddingRight)
+        reshuffle(width)
       }, 200)
     }
     window.addEventListener('resize', onResize)
@@ -200,7 +207,7 @@ export function App() {
       clearTimeout(timer)
       window.removeEventListener('resize', onResize)
     }
-  }, [shuffled, doShuffle])
+  }, [shuffled, reshuffle])
 
   return (
     <>
@@ -231,7 +238,7 @@ export function App() {
             <span className="panel-dot" />
             视觉呈现
           </div>
-          <div className="panel-body">
+          <div className="panel-body" ref={panelBodyRef}>
             {shuffled && shuffledData ? (
               <ShuffledView paragraphs={shuffledData.paragraphs} />
             ) : (
