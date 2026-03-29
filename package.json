@@ -1,7 +1,7 @@
 {
   "name": "article-shuffle",
   "version": "2.0.0",
-  "description": "不改变文字显示的原有顺序,而改变在 DOM 树中顺序.",
+  "description": "Shuffle text in the DOM while preserving visual rendering — anti-copy protection for web content.",
   "type": "module",
   "main": "publish/index.js",
   "module": "publish/index.js",
@@ -38,7 +38,12 @@
     "deploy": "vite build && gh-pages -d dist"
   },
   "keywords": [
-    "shuffle"
+    "shuffle",
+    "anti-copy",
+    "copy-protection",
+    "text-scramble",
+    "dom",
+    "content-protection"
   ],
   "author": "Innei",
   "license": "MIT"
